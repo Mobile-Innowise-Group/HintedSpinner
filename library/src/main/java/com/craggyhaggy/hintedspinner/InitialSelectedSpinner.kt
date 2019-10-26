@@ -16,24 +16,10 @@ class InitialSelectedSpinner @JvmOverloads constructor(
     override fun setSelection(position: Int) {
         super.setSelection(position)
 
-        handleSelection(position)
-    }
-
-    override fun setSelection(position: Int, animate: Boolean) {
-        super.setSelection(position, animate)
-
-        handleSelection(position)
-    }
-
-    private fun handleSelection(position: Int) {
-        if (initialPosition == INVALID_POSITION) {
-            initialPosition = position
-        } else {
-            // Prevent double onItemSelected callback event,
-            // when initial position is selected after another one.
-            if (position != initialPosition && isInitialSelect) {
-                isInitialSelect = false
-            }
+        // Prevent double onItemSelected callback event,
+        // when initial position is selected after another one.
+        if (initialPosition != INVALID_POSITION && position != initialPosition && isInitialSelect) {
+            isInitialSelect = false
         }
     }
 
@@ -44,12 +30,8 @@ class InitialSelectedSpinner @JvmOverloads constructor(
             return
         }
 
-        //selectedItemPosition
-
-        // setSelection is not called by default, when adapter is set.
-        // Assume, that initialPosition = 0.
         if (initialPosition == INVALID_POSITION) {
-            initialPosition = 0
+            initialPosition = selectedItemPosition
             return
         }
 
