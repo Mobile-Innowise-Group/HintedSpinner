@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.craggyhaggy.hintedspinner.InitialSelectedSpinner
-        android:id="@+id/spinner"
+    <com.craggyhaggy.hintedspinner.HintedSpinner
+        android:id="@+id/hintedspinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown" />
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
