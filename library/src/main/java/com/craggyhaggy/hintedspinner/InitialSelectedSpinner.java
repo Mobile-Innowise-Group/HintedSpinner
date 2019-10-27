@@ -39,7 +39,7 @@ class InitialSelectedSpinner extends AppCompatSpinner {
         super.onLayout(changed, l, t, r, b);
 
         // ConstraintLayout calls onLayout twice, so evaluate logic, after view is finally laid out.
-        if (ViewCompat.isLaidOut(this)) {
+        if (!ViewCompat.isLaidOut(this)) {
             return;
         }
 
