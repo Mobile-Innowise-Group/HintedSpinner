@@ -15,7 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class HintedSpinner extends ConstraintLayout {
 
-    interface OnSelectItemAction {
+    public interface OnSelectItemAction {
         void onItemSelected(String item);
     }
 

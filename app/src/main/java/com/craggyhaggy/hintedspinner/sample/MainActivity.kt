@@ -1,6 +1,7 @@
 package com.craggyhaggy.hintedspinner.sample
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,5 +17,9 @@ class MainActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_item,
             0
         )
+        hintedspinner.setOnSelectItemAction {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT)
+                .show()
+        }
     }
 }
