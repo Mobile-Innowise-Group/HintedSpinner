@@ -12,12 +12,21 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        hintedspinner.setItems(
+        hintedspinner1.setItems(
             listOf("1", "2", "3", "4", "5", "6"),
-            android.R.layout.simple_spinner_item,
-            0
+            android.R.layout.simple_spinner_item
         )
-        hintedspinner.setOnSelectItemAction {
+        hintedspinner1.setSelection(5)
+        hintedspinner1.setOnSelectItemAction {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT)
+                .show()
+        }
+
+        hintedspinner2.setItems(
+            listOf("a", "b", "c", "d", "e", "f"),
+            android.R.layout.simple_spinner_item
+        )
+        hintedspinner2.setOnSelectItemAction {
             Toast.makeText(this, it, Toast.LENGTH_SHORT)
                 .show()
         }
