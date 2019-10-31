@@ -1,6 +1,9 @@
 package com.craggyhaggy.hintedspinner;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
@@ -14,8 +17,12 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.LayoutRes;
+import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.widget.ImageViewCompat;
 
 public class HintedSpinner extends ConstraintLayout {
 
@@ -23,9 +30,10 @@ public class HintedSpinner extends ConstraintLayout {
         void onItemSelected(String item);
     }
 
-    private InitialSelectedSpinner spinner;
-    private TextView hint;
-    private ImageView arrow;
+    private InitialSelectedSpinner spinnerView;
+    private TextView hintView;
+    private ImageView arrowView;
+    private View dividerView;
 
     private boolean isInitialSelect = true;
     private OnSelectItemAction onSelectItemAction;
@@ -46,34 +54,38 @@ public class HintedSpinner extends ConstraintLayout {
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         View.inflate(context, R.layout.layout_hinted_spinner, this);
+        spinnerView = findViewById(R.id.spinner);
+        hintView = findViewById(R.id.hint);
+        arrowView = findViewById(R.id.arrow);
+        dividerView = findViewById(R.id.divider);
 
-        spinner = findViewById(R.id.spinner);
-        hint = findViewById(R.id.hint);
-        arrow = findViewById(R.id.arrow);
+        if (attrs != null) {
+            applyAttributes(context, attrs, defStyleAttr);
+        }
 
-        hint.setOnClickListener(new OnClickListener() {
+        hintView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinner.performClick();
+                spinnerView.performClick();
             }
         });
-        arrow.setOnClickListener(new OnClickListener() {
+        arrowView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                spinner.performClick();
+                spinnerView.performClick();
             }
         });
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (isInitialSelect) {
                     isInitialSelect = false;
                 } else {
-                    hint.setVisibility(INVISIBLE);
-                    spinner.setVisibility(VISIBLE);
+                    hintView.setVisibility(INVISIBLE);
+                    spinnerView.setVisibility(VISIBLE);
 
                     if (onSelectItemAction != null) {
-                        onSelectItemAction.onItemSelected((String) spinner.getSelectedItem());
+                        onSelectItemAction.onItemSelected((String) spinnerView.getSelectedItem());
                     }
                 }
             }
@@ -84,16 +96,47 @@ public class HintedSpinner extends ConstraintLayout {
         });
     }
 
-    public void setOnSelectItemAction(OnSelectItemAction action) {
-        onSelectItemAction = action;
+    private void applyAttributes(Context context, AttributeSet attrs, int defStyleAttr) {
+        final TypedArray array = context.getTheme().obtainStyledAttributes(
+                attrs, R.styleable.HintedSpinner, defStyleAttr, 0
+        );
+        try {
+            final boolean withDivider = array.getBoolean(
+                    R.styleable.HintedSpinner_with_divider, false
+            );
+            final @DrawableRes int arrowRes = array.getResourceId(
+                    R.styleable.HintedSpinner_arrow_drawable, R.drawable.ic_default_arrow
+            );
+            final String hint = array.getString(R.styleable.HintedSpinner_hint);
+            final @ColorInt int dividerTint = array.getColor(
+                    R.styleable.HintedSpinner_divider_tint, Color.BLACK
+            );
+            final ColorStateList arrowTint = array.getColorStateList(
+                    R.styleable.HintedSpinner_arrow_tint
+            );
+
+            hintView.setText(hint);
+            arrowView.setImageResource(arrowRes);
+            if (arrowTint != null) {
+                ImageViewCompat.setImageTintList(arrowView, arrowTint);
+            }
+            if (withDivider) {
+                dividerView.setBackgroundColor(dividerTint);
+                dividerView.setVisibility(VISIBLE);
+            } else {
+                dividerView.setVisibility(INVISIBLE);
+            }
+        } finally {
+            array.recycle();
+        }
     }
 
     public void setItems(List<String> items, @LayoutRes int itemLayout) {
-        spinner.setAdapter(new ArrayAdapter<>(getContext(), itemLayout, items));
+        spinnerView.setAdapter(new ArrayAdapter<>(getContext(), itemLayout, items));
     }
 
     public void setSelection(int position) {
-        final SpinnerAdapter adapter = spinner.getAdapter();
+        final SpinnerAdapter adapter = spinnerView.getAdapter();
         if (adapter == null) {
             throw new IllegalStateException("Set adapter before call setSelection.");
         }
@@ -103,7 +146,19 @@ public class HintedSpinner extends ConstraintLayout {
             throw new IllegalArgumentException(String.format(message, adapter.getCount()));
         }
 
-        spinner.setInitialSelection(position);
+        spinnerView.setInitialSelection(position);
+    }
+
+    public void setHint(@StringRes int hintRes) {
+        hintView.setText(hintRes);
+    }
+
+    public void setHint(CharSequence hint) {
+        hintView.setText(hint);
+    }
+
+    public void setOnSelectItemAction(OnSelectItemAction action) {
+        onSelectItemAction = action;
     }
 
     @Override

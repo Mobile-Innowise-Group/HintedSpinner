@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -7,15 +8,17 @@
     <com.craggyhaggy.hintedspinner.HintedSpinner
         android:id="@+id/hintedspinner1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:arrow_tint="@color/colorAccent"
+        app:with_divider="true" />
 
     <com.craggyhaggy.hintedspinner.HintedSpinner
         android:id="@+id/hintedspinner2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        app:arrow_drawable="@drawable/ic_arrow_downward_black_24dp"
+        app:divider_tint="@color/colorAccent"
+        app:hint="@string/hint"
+        app:with_divider="true" />
 
 </LinearLayout>

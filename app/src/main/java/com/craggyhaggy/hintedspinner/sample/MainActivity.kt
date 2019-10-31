@@ -16,7 +16,6 @@ class MainActivity : AppCompatActivity() {
             listOf("1", "2", "3", "4", "5", "6"),
             android.R.layout.simple_spinner_item
         )
-        hintedspinner1.setSelection(5)
         hintedspinner1.setOnSelectItemAction {
             Toast.makeText(this, it, Toast.LENGTH_SHORT)
                 .show()

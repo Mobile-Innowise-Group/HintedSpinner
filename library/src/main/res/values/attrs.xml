@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="HintedSpinner">
+        <attr name="with_divider" format="boolean" />
+        <attr name="divider_tint" format="color" />
+        <attr name="arrow_drawable" format="reference" />
+        <attr name="arrow_tint" format="color" />
+        <attr name="hint" format="string" />
+    </declare-styleable>
+</resources>
