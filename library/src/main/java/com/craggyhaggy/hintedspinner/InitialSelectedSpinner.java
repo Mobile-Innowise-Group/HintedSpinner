@@ -18,15 +18,19 @@ class InitialSelectedSpinner extends AppCompatSpinner {
     private int initialPosition = -1;
 
     public InitialSelectedSpinner(Context context) {
-        this(context, null);
+        super(context);
     }
 
     public InitialSelectedSpinner(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs);
     }
 
     public InitialSelectedSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    public InitialSelectedSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
+        super(context, attrs, defStyleAttr, mode);
     }
 
     @Override

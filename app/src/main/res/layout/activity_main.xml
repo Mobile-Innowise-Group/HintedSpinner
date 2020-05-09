@@ -10,6 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:arrow_tint="@color/colorAccent"
+        app:hint="Bla-Bla-Bla"
+        app:hintTextAppearance="@style/TextAppearance.HintTextAppearance"
         app:with_divider="true" />
 
     <com.craggyhaggy.hintedspinner.HintedSpinner
@@ -19,6 +21,14 @@
         app:arrow_drawable="@drawable/ic_arrow_downward_black_24dp"
         app:divider_tint="@color/colorAccent"
         app:hint="@string/hint"
+        app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:with_divider="true" />
+
+    <Spinner
+        android:id="@+id/simple_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:popupBackground="@color/colorAccent"
+        android:spinnerMode="dropdown" />
 
 </LinearLayout>

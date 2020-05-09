@@ -1,6 +1,7 @@
 package com.craggyhaggy.hintedspinner.sample
 
 import android.os.Bundle
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,22 +13,31 @@ class MainActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main)
 
-        hintedspinner1.setItems(
-            listOf("1", "2", "3", "4", "5", "6"),
-            android.R.layout.simple_spinner_item
-        )
+        val items = listOf("Derek", "Kyrre", "Edrik", "Myriamm", "Alamar", "Gunnar")
+        hintedspinner1.setItems(items)
         hintedspinner1.setOnSelectItemAction {
             Toast.makeText(this, it, Toast.LENGTH_SHORT)
                 .show()
         }
 
         hintedspinner2.setItems(
-            listOf("a", "b", "c", "d", "e", "f"),
-            android.R.layout.simple_spinner_item
+            items,
+            R.layout.layout_simple_hinted_spinner_item,
+            R.layout.layout_simple_drop_down_hinted_spinner_item,
+            R.id.item_id
         )
         hintedspinner2.setOnSelectItemAction {
             Toast.makeText(this, it, Toast.LENGTH_SHORT)
                 .show()
+        }
+
+        ArrayAdapter<String>(
+            this,
+            android.R.layout.simple_spinner_item,
+            items
+        ).also { adapter ->
+            adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
+            simple_spinner.adapter = adapter
         }
     }
 }

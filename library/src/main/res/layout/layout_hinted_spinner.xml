@@ -4,24 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="50dp"
     tools:parentTag="androidx.constraintlayout.widget.ConstraintLayout">
 
-    <com.craggyhaggy.hintedspinner.InitialSelectedSpinner
-        android:id="@+id/spinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:spinnerMode="dropdown"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@id/divider"
-        app:layout_constraintEnd_toStartOf="@id/arrow"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:spinnerMode="dropdown" />
+    <!--InitialSelectedSpinner will be added programmatically-->
+    <!--to support different spinnerMode.-->
 
     <TextView
         android:id="@+id/hint"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:ellipsize="end"
         app:layout_constraintBottom_toTopOf="@id/divider"
         app:layout_constraintEnd_toStartOf="@id/arrow"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,8 +23,9 @@
         android:id="@+id/arrow"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintBottom_toTopOf="@id/divider"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/ic_default_arrow" />
 
     <View
