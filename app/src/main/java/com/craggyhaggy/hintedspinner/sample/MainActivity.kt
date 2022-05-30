@@ -10,25 +10,29 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
         val items = listOf("Derek", "Kyrre", "Edrik", "Myriamm", "Alamar", "Gunnar")
-        hintedspinner1.setItems(items)
-        hintedspinner1.setOnSelectItemAction {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT)
-                .show()
+
+        hintedspinner1.apply {
+            setItems(items)
+            setOnSelectItemAction {
+                Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
-        hintedspinner2.setItems(
-            items,
-            R.layout.layout_simple_hinted_spinner_item,
-            R.layout.layout_simple_drop_down_hinted_spinner_item,
-            R.id.item_id
-        )
-        hintedspinner2.setOnSelectItemAction {
-            Toast.makeText(this, it, Toast.LENGTH_SHORT)
-                .show()
+        hintedspinner2.apply {
+            setItems(
+                items,
+                R.layout.layout_simple_hinted_spinner_item,
+                R.layout.layout_simple_drop_down_hinted_spinner_item,
+                R.id.item_id
+            )
+            setOnSelectItemAction {
+                Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT)
+                    .show()
+            }
         }
 
         ArrayAdapter<String>(

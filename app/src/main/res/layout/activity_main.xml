@@ -5,24 +5,26 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.craggyhaggy.hintedspinner.HintedSpinner
+    <com.craggyhaggy.hintedspinner.SpinnerLayout
         android:id="@+id/hintedspinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:arrow_tint="@color/colorAccent"
+        android:layout_marginVertical="16dp"
+        app:arrowTint="@color/colorAccent"
         app:hint="Bla-Bla-Bla"
         app:hintTextAppearance="@style/TextAppearance.HintTextAppearance"
-        app:with_divider="true" />
+        app:withDivider="true" />
 
-    <com.craggyhaggy.hintedspinner.HintedSpinner
+    <com.craggyhaggy.hintedspinner.SpinnerLayout
         android:id="@+id/hintedspinner2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:arrow_drawable="@drawable/ic_arrow_downward_black_24dp"
-        app:divider_tint="@color/colorAccent"
+        android:layout_marginVertical="16dp"
+        app:arrowDrawable="@drawable/ic_arrow_downward_black_24dp"
+        app:dividerTint="@color/colorAccent"
         app:hint="@string/hint"
         app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:with_divider="true" />
+        app:withDivider="true" />
 
     <Spinner
         android:id="@+id/simple_spinner"

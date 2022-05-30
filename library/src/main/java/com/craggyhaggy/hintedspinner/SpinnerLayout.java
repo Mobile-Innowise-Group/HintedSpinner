@@ -27,13 +27,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.view.ViewCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.core.widget.TextViewCompat;
 
-// TODO: rename (Rename it as SpinnerLayout).
-public class HintedSpinner extends ConstraintLayout {
+public class SpinnerLayout extends ConstraintLayout {
 
     public interface OnSelectItemAction {
         void onItemSelected(String item);
@@ -47,15 +44,15 @@ public class HintedSpinner extends ConstraintLayout {
     private boolean isInitialSelect = true;
     private OnSelectItemAction onSelectItemAction;
 
-    public HintedSpinner(Context context) {
+    public SpinnerLayout(Context context) {
         this(context, null);
     }
 
-    public HintedSpinner(Context context, AttributeSet attrs) {
+    public SpinnerLayout(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public HintedSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
+    public SpinnerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         init(context, attrs, defStyleAttr);
@@ -71,7 +68,7 @@ public class HintedSpinner extends ConstraintLayout {
         if (attrs != null) {
             applyAttributes(context, attrs, defStyleAttr);
         } else {
-            initSpinner(context, Spinner.MODE_DROPDOWN);
+            initSpinner(context,null, defStyleAttr,Spinner.MODE_DROPDOWN);
         }
 
         hintView.setOnClickListener(new OnClickListener() {
@@ -132,10 +129,10 @@ public class HintedSpinner extends ConstraintLayout {
                     R.styleable.HintedSpinner_popupMode, Spinner.MODE_DROPDOWN
             );
             final int popupBackground = array.getColor(
-                    R.styleable.HintedSpinner_popupBackground, -1
+                    R.styleable.HintedSpinner_popupBackground, Color.rgb(30,40,50)
             );
 
-            initSpinner(context, popupMode, popupBackground);
+            initSpinner(context,attrs,popupBackground,popupMode);
             hintView.setText(hint);
             if (hintTextAppearance != -1) {
                 TextViewCompat.setTextAppearance(hintView, hintTextAppearance);
@@ -155,30 +152,13 @@ public class HintedSpinner extends ConstraintLayout {
         }
     }
 
-    // У спиннера в спиннер моде отрисовывается стрелка сейчас.
-    // Почему???
-    // Необходимо также распарсить popupBackground!!!
-    private void initSpinner(Context context, int spinnerMode, @ColorInt int popupBackground) {
-        final int spinnerId = ViewCompat.generateViewId();
-        final LayoutParams lp = new LayoutParams(
-                LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT
-        );
-        final ConstraintSet set = new ConstraintSet();
+    private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
         final Context themedContext = new ContextThemeWrapper(
-                context, R.style.Widget_AppCompat_Spinner
+                context, R.style.Base_Widget_AppCompat_DropDownItem_Spinner
         );
-
-        spinnerView = new InitialSelectedSpinner(themedContext, null, 0, spinnerMode);
-        spinnerView.setId(spinnerId);
-        spinnerView.setBackground(null);
+        spinnerView = new InitialSelectedSpinner(themedContext, attrs, defStyleAttr, mode);
         spinnerView.setVisibility(INVISIBLE);
-        addView(spinnerView, -1, lp);
-
-        set.clone(this);
-        set.connect(spinnerId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-        set.connect(spinnerId, ConstraintSet.END, R.id.arrow, ConstraintSet.START);
-        set.connect(spinnerId, ConstraintSet.BOTTOM, R.id.divider, ConstraintSet.TOP);
-        set.applyTo(this);
+        addView(spinnerView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
     }
 
     public void setItems(@NonNull List<String> items) {

@@ -13,9 +13,9 @@ class InitialSelectedSpinner extends AppCompatSpinner {
     private static final String KEY_IS_INITIAL_SELECT = "KEY_IS_INITIAL_SELECT";
     private static final String KEY_SUPER_STATE = "KEY_SUPER_STATE";
 
-    private boolean isInitialSelect = true;
-    private boolean shouldForceSelection = false;
-    private int initialPosition = -1;
+    private boolean shouldForceSelection = true;
+    private boolean isSelected = false;
+    private int itemPosition = 0;
 
     public InitialSelectedSpinner(Context context) {
         super(context);
@@ -37,20 +37,14 @@ class InitialSelectedSpinner extends AppCompatSpinner {
     public void setSelection(int position) {
         super.setSelection(position);
 
-        if (position == initialPosition) {
-            if (isInitialSelect) {
-                isInitialSelect = false;
-                if (getOnItemSelectedListener() != null) {
-                    getOnItemSelectedListener().onItemSelected(this, null, position, 0);
-                }
-            }
+        if (getOnItemSelectedListener() != null) {
+            isSelected = true;
+            getOnItemSelectedListener().onItemSelected(this, null, position, 0);
         }
     }
 
     void setInitialSelection(int position) {
-        // Right now, this logic triggers onItemSelected twice and outside callback is triggered.
-        // Is it bug or feature?
-        initialPosition = position;
+        itemPosition = position;
         setSelection(position);
     }
 
@@ -63,14 +57,15 @@ class InitialSelectedSpinner extends AppCompatSpinner {
         }
 
         final int selectedItemPosition = getSelectedItemPosition();
-        if (initialPosition == INVALID_POSITION) {
-            initialPosition = selectedItemPosition;
+
+        if (itemPosition == 0 && !isSelected) {
+            //itemPosition == 0 && !isSelected -> hint field
+            itemPosition = selectedItemPosition;
         }
 
-        if (shouldForceSelection) {
-            shouldForceSelection = false;
-            isInitialSelect = true;
-            setSelection(initialPosition);
+        if (!shouldForceSelection) {
+            shouldForceSelection = true;
+            setSelection(itemPosition);
         }
     }
 
@@ -79,7 +74,7 @@ class InitialSelectedSpinner extends AppCompatSpinner {
         final Bundle bundle = new Bundle();
         bundle.putParcelable(KEY_SUPER_STATE, super.onSaveInstanceState());
         bundle.putInt(KEY_INITIAL_POSITION, getSelectedItemPosition());
-        bundle.putBoolean(KEY_IS_INITIAL_SELECT, isInitialSelect);
+        bundle.putBoolean(KEY_IS_INITIAL_SELECT, isSelected);
         return bundle;
     }
 
@@ -89,10 +84,8 @@ class InitialSelectedSpinner extends AppCompatSpinner {
         final Parcelable superState = bundle.getParcelable(KEY_SUPER_STATE);
         super.onRestoreInstanceState(superState);
 
-        initialPosition = bundle.getInt(KEY_INITIAL_POSITION);
-        isInitialSelect = bundle.getBoolean(KEY_IS_INITIAL_SELECT);
-        // Spinner doesn't trigger onItemSelected method in case of selectedItemPosition = 0.
-        // Force this logic, only when selectedItemPosition = 0 and nothing was selected.
-        shouldForceSelection = initialPosition == 0 && !isInitialSelect;
+        itemPosition = bundle.getInt(KEY_INITIAL_POSITION);
+        isSelected = bundle.getBoolean(KEY_IS_INITIAL_SELECT);
+        shouldForceSelection = (itemPosition == 0 && !isSelected);
     }
 }
