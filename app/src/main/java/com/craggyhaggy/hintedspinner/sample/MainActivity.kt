@@ -4,25 +4,27 @@ import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.craggyhaggy.hintedspinner.sample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val items = listOf("Derek", "Kyrre", "Edrik", "Myriamm", "Alamar", "Gunnar")
 
-        hintedspinner1.apply {
+        binding.hintedspinner1.apply {
             setItems(items)
             setOnSelectItemAction {
                 Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT)
                     .show()
             }
         }
-
-        hintedspinner2.apply {
+        binding.hintedspinner2.apply {
             setItems(
                 items,
                 R.layout.layout_simple_hinted_spinner_item,
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             items
         ).also { adapter ->
             adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item)
-            simple_spinner.adapter = adapter
+            binding.simpleSpinner.adapter = adapter
         }
     }
 }

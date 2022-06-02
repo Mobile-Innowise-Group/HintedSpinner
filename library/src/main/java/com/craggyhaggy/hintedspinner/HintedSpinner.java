@@ -17,8 +17,6 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import java.util.List;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
@@ -30,7 +28,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.widget.ImageViewCompat;
 import androidx.core.widget.TextViewCompat;
 
-public class SpinnerLayout extends ConstraintLayout {
+import java.util.List;
+
+public class HintedSpinner extends ConstraintLayout {
 
     public interface OnSelectItemAction {
         void onItemSelected(String item);
@@ -44,15 +44,15 @@ public class SpinnerLayout extends ConstraintLayout {
     private boolean isInitialSelect = true;
     private OnSelectItemAction onSelectItemAction;
 
-    public SpinnerLayout(Context context) {
+    public HintedSpinner(Context context) {
         this(context, null);
     }
 
-    public SpinnerLayout(Context context, AttributeSet attrs) {
+    public HintedSpinner(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public SpinnerLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public HintedSpinner(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         init(context, attrs, defStyleAttr);
@@ -68,21 +68,10 @@ public class SpinnerLayout extends ConstraintLayout {
         if (attrs != null) {
             applyAttributes(context, attrs, defStyleAttr);
         } else {
-            initSpinner(context,null, defStyleAttr,Spinner.MODE_DROPDOWN);
+            initSpinner(context, null, defStyleAttr, Spinner.MODE_DROPDOWN);
         }
-
-        hintView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerView.performClick();
-            }
-        });
-        arrowView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerView.performClick();
-            }
-        });
+        hintView.setOnClickListener(v -> spinnerView.performClick());
+        arrowView.setOnClickListener(v -> spinnerView.performClick());
         spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -129,10 +118,10 @@ public class SpinnerLayout extends ConstraintLayout {
                     R.styleable.HintedSpinner_popupMode, Spinner.MODE_DROPDOWN
             );
             final int popupBackground = array.getColor(
-                    R.styleable.HintedSpinner_popupBackground, Color.rgb(30,40,50)
+                    R.styleable.HintedSpinner_popupBackground, Color.rgb(30, 40, 50)
             );
 
-            initSpinner(context,attrs,popupBackground,popupMode);
+            initSpinner(context, attrs, popupBackground, popupMode);
             hintView.setText(hint);
             if (hintTextAppearance != -1) {
                 TextViewCompat.setTextAppearance(hintView, hintTextAppearance);
@@ -153,7 +142,7 @@ public class SpinnerLayout extends ConstraintLayout {
     }
 
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
-        final Context themedContext = new ContextThemeWrapper(
+        final ContextThemeWrapper themedContext = new ContextThemeWrapper(
                 context, R.style.Base_Widget_AppCompat_DropDownItem_Spinner
         );
         spinnerView = new InitialSelectedSpinner(themedContext, attrs, defStyleAttr, mode);
@@ -271,7 +260,7 @@ public class SpinnerLayout extends ConstraintLayout {
 
     private static class SavedState extends BaseSavedState {
 
-        SparseArray childrenStates;
+        SparseArray<Parcelable> childrenStates;
 
         SavedState(Parcelable superState) {
             super(superState);

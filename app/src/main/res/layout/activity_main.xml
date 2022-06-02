@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.craggyhaggy.hintedspinner.SpinnerLayout
+    <com.craggyhaggy.hintedspinner.HintedSpinner
         android:id="@+id/hintedspinner1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,7 +15,7 @@
         app:hintTextAppearance="@style/TextAppearance.HintTextAppearance"
         app:withDivider="true" />
 
-    <com.craggyhaggy.hintedspinner.SpinnerLayout
+    <com.craggyhaggy.hintedspinner.HintedSpinner
         android:id="@+id/hintedspinner2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
         android:id="@+id/simple_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:popupBackground="@color/colorAccent"
+        android:popupBackground="@color/colorPrimaryDark"
         android:spinnerMode="dropdown" />
 
 </LinearLayout>
