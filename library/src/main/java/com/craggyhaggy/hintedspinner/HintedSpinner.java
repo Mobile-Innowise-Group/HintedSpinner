@@ -23,15 +23,15 @@ import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.view.ViewCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.core.widget.TextViewCompat;
 
 import java.util.List;
 
 public class HintedSpinner extends ConstraintLayout {
-
     public interface OnSelectItemAction {
         void onItemSelected(String item);
     }
@@ -112,16 +112,17 @@ public class HintedSpinner extends ConstraintLayout {
                     R.styleable.HintedSpinner_arrowTint
             );
             final int hintTextAppearance = array.getResourceId(
-                    R.styleable.HintedSpinner_hintTextAppearance, -1
+                    R.styleable.HintedSpinner_hintTextAppearance, Color.BLACK
             );
             final int popupMode = array.getInteger(
                     R.styleable.HintedSpinner_popupMode, Spinner.MODE_DROPDOWN
             );
-            final int popupBackground = array.getColor(
-                    R.styleable.HintedSpinner_popupBackground, Color.rgb(30, 40, 50)
+            final int popupBackground = array.getResourceId(
+                    R.styleable.HintedSpinner_popupBackground,
+                    android.R.color.white
             );
 
-            initSpinner(context, attrs, popupBackground, popupMode);
+            initSpinner(context, attrs, defStyleAttr, popupMode);
             hintView.setText(hint);
             if (hintTextAppearance != -1) {
                 TextViewCompat.setTextAppearance(hintView, hintTextAppearance);
@@ -142,12 +143,19 @@ public class HintedSpinner extends ConstraintLayout {
     }
 
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
-        final ContextThemeWrapper themedContext = new ContextThemeWrapper(
-                context, R.style.Base_Widget_AppCompat_DropDownItem_Spinner
-        );
-        spinnerView = new InitialSelectedSpinner(themedContext, attrs, defStyleAttr, mode);
+        spinnerView = new InitialSelectedSpinner(context, attrs, defStyleAttr, mode);
         spinnerView.setVisibility(INVISIBLE);
-        addView(spinnerView, LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+
+        final LayoutParams lp = new LayoutParams(
+                LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT
+        );
+        ConstraintSet set = new ConstraintSet();
+        set.clone(this);
+        set.connect(spinnerView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+        set.connect(spinnerView.getId(), ConstraintSet.END, R.id.arrow, ConstraintSet.START);
+        set.connect(spinnerView.getId(), ConstraintSet.BOTTOM, R.id.divider, ConstraintSet.TOP);
+        set.applyTo(this);
+        addView(spinnerView, lp);
     }
 
     public void setItems(@NonNull List<String> items) {
@@ -241,11 +249,12 @@ public class HintedSpinner extends ConstraintLayout {
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         final SavedState ss = (SavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
+
 
         for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).restoreHierarchyState(ss.childrenStates);
         }
+        super.onRestoreInstanceState(ss.getSuperState());
     }
 
     @Override

@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/my_id"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <com.craggyhaggy.hintedspinner.HintedSpinner
         android:id="@+id/hintedspinner1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:layout_marginVertical="16dp"
         app:arrowTint="@color/colorAccent"
         app:hint="Bla-Bla-Bla"
@@ -19,11 +21,14 @@
         android:id="@+id/hintedspinner2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="30dp"
         android:layout_marginVertical="16dp"
         app:arrowDrawable="@drawable/ic_arrow_downward_black_24dp"
-        app:dividerTint="@color/colorAccent"
+        app:dividerTint="@color/red"
         app:hint="@string/hint"
         app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:popupBackground="@color/colorAccent"
         app:withDivider="true" />
 
     <Spinner
