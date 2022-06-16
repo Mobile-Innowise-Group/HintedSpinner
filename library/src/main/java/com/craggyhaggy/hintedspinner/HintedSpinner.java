@@ -18,14 +18,15 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.annotation.StyleRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
-import androidx.core.view.ViewCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.core.widget.TextViewCompat;
 
@@ -101,25 +102,31 @@ public class HintedSpinner extends ConstraintLayout {
             final boolean withDivider = array.getBoolean(
                     R.styleable.HintedSpinner_withDivider, false
             );
+
+            //тоже надо ли указывать?
             final @DrawableRes int arrowRes = array.getResourceId(
                     R.styleable.HintedSpinner_arrowDrawable, R.drawable.ic_default_arrow
             );
             final String hint = array.getString(R.styleable.HintedSpinner_hint);
+
             final @ColorInt int dividerTint = array.getColor(
-                    R.styleable.HintedSpinner_dividerTint, Color.BLACK
+                    R.styleable.HintedSpinner_dividerTint, Color.GRAY
             );
-            final ColorStateList arrowTint = array.getColorStateList(
-                    R.styleable.HintedSpinner_arrowTint
+
+            //а нужно ли вообще менять цвет
+            //если дефолтный подстраивается под тему
+            final @ColorInt int arrowTint = array.getColor(
+                    R.styleable.HintedSpinner_arrowTint, Color.BLACK
             );
             final int hintTextAppearance = array.getResourceId(
-                    R.styleable.HintedSpinner_hintTextAppearance, Color.BLACK
+                    R.styleable.HintedSpinner_hintTextAppearance, R.style.TextAppearance_AppCompat
             );
             final int popupMode = array.getInteger(
                     R.styleable.HintedSpinner_popupMode, Spinner.MODE_DROPDOWN
             );
-            final int popupBackground = array.getResourceId(
+            final @ColorRes int popupBackground = array.getResourceId(
                     R.styleable.HintedSpinner_popupBackground,
-                    android.R.color.white
+                    android.R.color.transparent
             );
 
             initSpinner(context, attrs, defStyleAttr, popupMode);
@@ -128,15 +135,15 @@ public class HintedSpinner extends ConstraintLayout {
                 TextViewCompat.setTextAppearance(hintView, hintTextAppearance);
             }
             arrowView.setImageResource(arrowRes);
-            if (arrowTint != null) {
-                ImageViewCompat.setImageTintList(arrowView, arrowTint);
-            }
+            ColorStateList colorOfArrow = ColorStateList.valueOf(arrowTint);
+            ImageViewCompat.setImageTintList(arrowView, colorOfArrow);
+            dividerView.setBackgroundColor(dividerTint);
             if (withDivider) {
-                dividerView.setBackgroundColor(dividerTint);
                 dividerView.setVisibility(VISIBLE);
             } else {
                 dividerView.setVisibility(INVISIBLE);
             }
+            setPopupBackground(popupBackground);
         } finally {
             array.recycle();
         }
@@ -147,7 +154,7 @@ public class HintedSpinner extends ConstraintLayout {
         spinnerView.setVisibility(INVISIBLE);
 
         final LayoutParams lp = new LayoutParams(
-                LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT
+                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
         );
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
@@ -188,7 +195,6 @@ public class HintedSpinner extends ConstraintLayout {
         final TextView text;
         try {
             if (textViewId == 0) {
-                //  If no custom field is assigned, assume the whole resource is a TextView
                 text = (TextView) view;
             } else {
                 //  Otherwise, find the TextView field within the layout
@@ -200,14 +206,11 @@ public class HintedSpinner extends ConstraintLayout {
                             + " in item layout");
                 }
             }
+
         } catch (ClassCastException e) {
             throw new IllegalStateException(
                     "HinterSpinner requires the resource ID to be a TextView", e);
         }
-
-        hintView.setPadding(text.getPaddingLeft(), text.getPaddingTop(),
-                text.getPaddingRight(), text.getPaddingBottom());
-        hintView.setEllipsize(text.getEllipsize());
     }
 
     public void setSelection(int position) {
@@ -221,7 +224,7 @@ public class HintedSpinner extends ConstraintLayout {
             throw new IllegalArgumentException(String.format(message, adapter.getCount()));
         }
 
-        spinnerView.setInitialSelection(position);
+        spinnerView.setSelection(position);
     }
 
     public void setHint(@StringRes int hintRes) {
@@ -230,6 +233,43 @@ public class HintedSpinner extends ConstraintLayout {
 
     public void setHint(CharSequence hint) {
         hintView.setText(hint);
+    }
+
+    public void setPopupBackground(@ColorRes int color) {
+        spinnerView.setPopupBackgroundResource(color);
+        invalidate();
+    }
+
+    public void setWithDivider(boolean withDivider) {
+        if (withDivider) {
+            dividerView.setVisibility(VISIBLE);
+        } else {
+            dividerView.setVisibility(INVISIBLE);
+        }
+        invalidate();
+    }
+
+    public void setArrowImage(@DrawableRes int arrow) {
+        arrowView.setImageResource(arrow);
+        invalidate();
+    }
+
+    public void setDividerColor(@ColorInt int color) {
+        dividerView.setBackgroundColor(color);
+        invalidate();
+    }
+
+    public void setArrowColor(@ColorInt int color) {
+        ColorStateList colorStateList = ColorStateList.valueOf(color);
+        ImageViewCompat.setImageTintList(arrowView, colorStateList);
+        invalidate();
+    }
+
+    public void setHintStyle(@StyleRes int style) {
+        if (style != -1) {
+            TextViewCompat.setTextAppearance(hintView, style);
+            invalidate();
+        }
     }
 
     public void setOnSelectItemAction(OnSelectItemAction action) {
@@ -249,12 +289,12 @@ public class HintedSpinner extends ConstraintLayout {
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         final SavedState ss = (SavedState) state;
-
+        super.onRestoreInstanceState(ss.getSuperState());
 
         for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).restoreHierarchyState(ss.childrenStates);
         }
-        super.onRestoreInstanceState(ss.getSuperState());
+
     }
 
     @Override
