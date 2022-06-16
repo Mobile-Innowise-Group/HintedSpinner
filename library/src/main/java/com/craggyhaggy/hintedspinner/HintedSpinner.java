@@ -17,24 +17,21 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import java.util.List;
-
 import androidx.annotation.ColorInt;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-import androidx.appcompat.view.ContextThemeWrapper;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.ImageViewCompat;
 import androidx.core.widget.TextViewCompat;
 
-// TODO: rename (Rename it as SpinnerLayout).
-public class HintedSpinner extends ConstraintLayout {
+import java.util.List;
 
+public class HintedSpinner extends ConstraintLayout {
     public interface OnSelectItemAction {
         void onItemSelected(String item);
     }
@@ -71,21 +68,10 @@ public class HintedSpinner extends ConstraintLayout {
         if (attrs != null) {
             applyAttributes(context, attrs, defStyleAttr);
         } else {
-            initSpinner(context, Spinner.MODE_DROPDOWN);
+            initSpinner(context, null, defStyleAttr, Spinner.MODE_DROPDOWN);
         }
-
-        hintView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerView.performClick();
-            }
-        });
-        arrowView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinnerView.performClick();
-            }
-        });
+        hintView.setOnClickListener(v -> spinnerView.performClick());
+        arrowView.setOnClickListener(v -> spinnerView.performClick());
         spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -126,16 +112,17 @@ public class HintedSpinner extends ConstraintLayout {
                     R.styleable.HintedSpinner_arrowTint
             );
             final int hintTextAppearance = array.getResourceId(
-                    R.styleable.HintedSpinner_hintTextAppearance, -1
+                    R.styleable.HintedSpinner_hintTextAppearance, Color.BLACK
             );
             final int popupMode = array.getInteger(
                     R.styleable.HintedSpinner_popupMode, Spinner.MODE_DROPDOWN
             );
-            final int popupBackground = array.getColor(
-                    R.styleable.HintedSpinner_popupBackground, -1
+            final int popupBackground = array.getResourceId(
+                    R.styleable.HintedSpinner_popupBackground,
+                    android.R.color.white
             );
 
-            initSpinner(context, popupMode, popupBackground);
+            initSpinner(context, attrs, defStyleAttr, popupMode);
             hintView.setText(hint);
             if (hintTextAppearance != -1) {
                 TextViewCompat.setTextAppearance(hintView, hintTextAppearance);
@@ -155,30 +142,20 @@ public class HintedSpinner extends ConstraintLayout {
         }
     }
 
-    // У спиннера в спиннер моде отрисовывается стрелка сейчас.
-    // Почему???
-    // Необходимо также распарсить popupBackground!!!
-    private void initSpinner(Context context, int spinnerMode, @ColorInt int popupBackground) {
-        final int spinnerId = ViewCompat.generateViewId();
+    private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
+        spinnerView = new InitialSelectedSpinner(context, attrs, defStyleAttr, mode);
+        spinnerView.setVisibility(INVISIBLE);
+
         final LayoutParams lp = new LayoutParams(
                 LayoutParams.MATCH_CONSTRAINT, LayoutParams.WRAP_CONTENT
         );
-        final ConstraintSet set = new ConstraintSet();
-        final Context themedContext = new ContextThemeWrapper(
-                context, R.style.Widget_AppCompat_Spinner
-        );
-
-        spinnerView = new InitialSelectedSpinner(themedContext, null, 0, spinnerMode);
-        spinnerView.setId(spinnerId);
-        spinnerView.setBackground(null);
-        spinnerView.setVisibility(INVISIBLE);
-        addView(spinnerView, -1, lp);
-
+        ConstraintSet set = new ConstraintSet();
         set.clone(this);
-        set.connect(spinnerId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-        set.connect(spinnerId, ConstraintSet.END, R.id.arrow, ConstraintSet.START);
-        set.connect(spinnerId, ConstraintSet.BOTTOM, R.id.divider, ConstraintSet.TOP);
+        set.connect(spinnerView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+        set.connect(spinnerView.getId(), ConstraintSet.END, R.id.arrow, ConstraintSet.START);
+        set.connect(spinnerView.getId(), ConstraintSet.BOTTOM, R.id.divider, ConstraintSet.TOP);
         set.applyTo(this);
+        addView(spinnerView, lp);
     }
 
     public void setItems(@NonNull List<String> items) {
@@ -272,11 +249,12 @@ public class HintedSpinner extends ConstraintLayout {
     @Override
     public void onRestoreInstanceState(Parcelable state) {
         final SavedState ss = (SavedState) state;
-        super.onRestoreInstanceState(ss.getSuperState());
+
 
         for (int i = 0; i < getChildCount(); i++) {
             getChildAt(i).restoreHierarchyState(ss.childrenStates);
         }
+        super.onRestoreInstanceState(ss.getSuperState());
     }
 
     @Override
@@ -291,7 +269,7 @@ public class HintedSpinner extends ConstraintLayout {
 
     private static class SavedState extends BaseSavedState {
 
-        SparseArray childrenStates;
+        SparseArray<Parcelable> childrenStates;
 
         SavedState(Parcelable superState) {
             super(superState);
