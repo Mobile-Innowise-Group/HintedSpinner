@@ -21,12 +21,6 @@ class MainActivity : AppCompatActivity() {
         val items = listOf("Derek", "Kyrre", "Edrik", "Myriamm", "Alamar", "Gunnar")
 
         binding.hintedSpinner.apply {
-            setItems(
-                items,
-                R.layout.layout_simple_hinted_spinner_item,
-                R.layout.layout_simple_drop_down_hinted_spinner_item,
-                R.id.item_id
-            )
             setOnSelectItemAction {
                 Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT)
                     .show()
