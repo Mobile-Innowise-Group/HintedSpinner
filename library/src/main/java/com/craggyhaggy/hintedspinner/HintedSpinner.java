@@ -126,7 +126,7 @@ public class HintedSpinner extends ConstraintLayout {
             );
             final @ColorRes int popupBackground = array.getResourceId(
                     R.styleable.HintedSpinner_popupBackground,
-                    android.R.color.transparent
+                    android.R.color.darker_gray
             );
 
             initSpinner(context, attrs, defStyleAttr, popupMode);
