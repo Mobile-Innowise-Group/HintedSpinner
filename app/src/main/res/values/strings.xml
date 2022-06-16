@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HintedSpinner</string>
+    <string name="hint">Select a super country</string>
 </resources>
