@@ -30,6 +30,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.widget.ImageViewCompat;
 import androidx.core.widget.TextViewCompat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HintedSpinner extends ConstraintLayout {
@@ -134,8 +135,10 @@ public class HintedSpinner extends ConstraintLayout {
             );
 
             initSpinner(context, attrs, defStyleAttr, popupMode);
-            if (items != null)
-                setItems(items);
+            if (items != null) {
+                List<String> itemsList = convertCharSequenceToList(items);
+                setItems(itemsList);
+            }
             hintView.setText(hint);
             if (hintTextAppearance != -1) {
                 TextViewCompat.setTextAppearance(hintView, hintTextAppearance);
@@ -155,6 +158,14 @@ public class HintedSpinner extends ConstraintLayout {
         }
     }
 
+    private List<String> convertCharSequenceToList(CharSequence[] items) {
+        List<String> list = new ArrayList<String>();
+        for (CharSequence item : items) {
+            list.add(item.toString());
+        }
+        return list;
+    }
+
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
         spinnerView = new InitialSelectedSpinner(context, attrs, defStyleAttr, mode);
         spinnerView.setVisibility(INVISIBLE);
@@ -171,15 +182,6 @@ public class HintedSpinner extends ConstraintLayout {
         addView(spinnerView, lp);
     }
 
-    public void setItems(@NonNull CharSequence[] items) {
-        setItems(
-                items,
-                android.R.layout.simple_spinner_item,
-                R.layout.support_simple_spinner_dropdown_item,
-                android.R.id.text1
-        );
-    }
-
     public void setItems(@NonNull List<String> items) {
         setItems(
                 items,
@@ -187,20 +189,6 @@ public class HintedSpinner extends ConstraintLayout {
                 R.layout.support_simple_spinner_dropdown_item,
                 android.R.id.text1
         );
-    }
-
-    public void setItems(
-            @NonNull CharSequence[] items,
-            @LayoutRes int itemLayout,
-            @LayoutRes int dropDownItemLayout,
-            @IdRes int textViewId
-    ) {
-        adoptHintToItem(itemLayout, textViewId);
-        final ArrayAdapter adapter = new ArrayAdapter<>(
-                getContext(), itemLayout, textViewId, items
-        );
-        adapter.setDropDownViewResource(dropDownItemLayout);
-        spinnerView.setAdapter(adapter);
     }
 
     public void setItems(
