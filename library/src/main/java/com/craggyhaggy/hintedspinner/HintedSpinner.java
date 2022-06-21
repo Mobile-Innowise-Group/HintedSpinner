@@ -30,6 +30,7 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.widget.ImageViewCompat;
 import androidx.core.widget.TextViewCompat;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HintedSpinner extends ConstraintLayout {
@@ -126,10 +127,18 @@ public class HintedSpinner extends ConstraintLayout {
             );
             final @ColorRes int popupBackground = array.getResourceId(
                     R.styleable.HintedSpinner_popupBackground,
-                    android.R.color.transparent
+                    android.R.color.darker_gray
+            );
+
+            final CharSequence[] items = array.getTextArray(
+                    R.styleable.HintedSpinner_items
             );
 
             initSpinner(context, attrs, defStyleAttr, popupMode);
+            if (items != null) {
+                List<String> itemsList = convertCharSequenceToList(items);
+                setItems(itemsList);
+            }
             hintView.setText(hint);
             if (hintTextAppearance != -1) {
                 TextViewCompat.setTextAppearance(hintView, hintTextAppearance);
@@ -147,6 +156,14 @@ public class HintedSpinner extends ConstraintLayout {
         } finally {
             array.recycle();
         }
+    }
+
+    private List<String> convertCharSequenceToList(CharSequence[] items) {
+        List<String> list = new ArrayList<String>();
+        for (CharSequence item : items) {
+            list.add(item.toString());
+        }
+        return list;
     }
 
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {

@@ -1,41 +1,233 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/my_id"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <com.craggyhaggy.hintedspinner.HintedSpinner
-        android:id="@+id/hintedspinner1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginVertical="16dp"
-        app:arrowTint="@color/colorAccent"
-        app:hint="Bla-Bla-Bla"
-        app:hintTextAppearance="@style/TextAppearance.HintTextAppearance"
-        app:withDivider="true" />
-
-    <com.craggyhaggy.hintedspinner.HintedSpinner
-        android:id="@+id/hintedspinner2"
+        android:id="@+id/hintedSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginVertical="16dp"
-        app:arrowDrawable="@drawable/ic_arrow_downward_black_24dp"
-        app:dividerTint="@color/red"
+        android:layout_margin="8dp"
         app:hint="@string/hint"
         app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Body2"
-        app:popupBackground="@color/colorAccent"
-        app:withDivider="true" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:items="@array/weekday"/>
 
-    <Spinner
-        android:id="@+id/simple_spinner"
+    <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:popupBackground="@color/colorPrimaryDark"
-        android:spinnerMode="dropdown" />
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hintedSpinner">
 
-</LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/divider_text"
+                style="@style/TextViewStyle"
+                android:text="@string/show_divider" />
+
+            <ToggleButton
+                android:id="@+id/with_divider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:textOff="@string/divider_is_hided"
+                android:textOn="@string/divider_is_showed" />
+
+            <TextView
+                android:id="@+id/divider_color_text"
+                style="@style/TextViewStyle"
+                android:text="@string/set_divider_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/divider_color_red"
+                    style="@style/ButtonStyle"
+                    android:background="@color/red" />
+
+                <Button
+                    android:id="@+id/divider_color_green"
+                    style="@style/ButtonStyle"
+                    android:background="@color/green" />
+
+                <Button
+                    android:id="@+id/divider_color_blue"
+                    style="@style/ButtonStyle"
+                    android:background="@color/blue" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/set_popupbackground"
+                android:textStyle="italic" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/popup_background_red"
+                    style="@style/ButtonStyle"
+                    android:background="@color/red" />
+
+                <Button
+                    android:id="@+id/popup_background_green"
+                    style="@style/ButtonStyle"
+                    android:background="@color/green" />
+
+                <Button
+                    android:id="@+id/popup_background_blue"
+                    style="@style/ButtonStyle"
+                    android:background="@color/blue" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/set_new_hint" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/hint1"
+                    style="@style/ButtonStyle"
+                    android:text="@string/custom_hint_1" />
+
+                <Button
+                    android:id="@+id/hint2"
+                    style="@style/ButtonStyle"
+                    android:text="@string/custom_hint_2" />
+
+                <Button
+                    android:id="@+id/hint3"
+                    style="@style/ButtonStyle"
+                    android:text="@string/custom_hint_3" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="Set arrow image" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/arrow_image_1"
+                    style="@style/ButtonStyle"
+                    android:src="@drawable/example_arrow_1" />
+
+                <ImageButton
+                    android:id="@+id/arrow_image_2"
+                    style="@style/ButtonStyle"
+                    android:src="@drawable/example_arrow_2" />
+
+                <ImageButton
+                    android:id="@+id/arrow_image_3"
+                    style="@style/ButtonStyle"
+                    android:src="@drawable/example_arrow_3" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/select_item" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/selection_1"
+                    style="@style/ButtonStyle"
+                    android:text="select first" />
+
+                <Button
+                    android:id="@+id/selection_2"
+                    style="@style/ButtonStyle"
+                    android:text="select second" />
+
+                <Button
+                    android:id="@+id/selection_3"
+                    style="@style/ButtonStyle"
+                    android:text="select third" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/set_hint_style" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/hint_style_1"
+                    style="@style/ButtonStyle"
+                    android:text="@string/style_1" />
+
+                <Button
+                    android:id="@+id/hint_style_2"
+                    style="@style/ButtonStyle"
+                    android:text="@string/style_2" />
+
+                <Button
+                    android:id="@+id/hint_style_3"
+                    style="@style/ButtonStyle"
+                    android:text="@string/style_3" />
+            </LinearLayout>
+
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/set_arrow_color" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/arrow_color_1"
+                    style="@style/ButtonStyle"
+                    android:background="@color/red" />
+
+                <Button
+                    android:id="@+id/arrow_color_2"
+                    style="@style/ButtonStyle"
+                    android:background="@color/green" />
+
+                <Button
+                    android:id="@+id/arrow_color_3"
+                    style="@style/ButtonStyle"
+                    android:background="@color/blue" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/default_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:text="@string/clean" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
