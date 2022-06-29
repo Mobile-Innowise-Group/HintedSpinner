@@ -39,4 +39,11 @@
         <item name="android:layout_margin">8dp</item>
         <item name="android:gravity">center</item>
     </style>
+    <style name="TextViewParallelStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+    </style>
 </resources>
