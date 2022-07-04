@@ -65,26 +65,11 @@ class MainActivity : AppCompatActivity() {
                 popupBackgroundBlue.setOnClickListener {
                     setPopupBackground(R.color.blue)
                 }
-                popupBackgroundGreen.setOnClickListener {
-                    setPopupBackground(R.color.green)
-                }
                 popupBackgroundRed.setOnClickListener {
                     setPopupBackground(R.color.red)
                 }
-                popupBackground1.setOnClickListener {
+                popupBackgroundGreen.setOnClickListener {
                     setPopupBackground(R.color.dark_green)
-                }
-                popupBackground2.setOnClickListener {
-                    setPopupBackground(R.color.fuchsia)
-                }
-                hint1.setOnClickListener {
-                    setHint(R.string.custom_hint_1)
-                }
-                hint2.setOnClickListener {
-                    setHint(R.string.custom_hint_2)
-                }
-                hint3.setOnClickListener {
-                    setHint(R.string.custom_hint_3)
                 }
                 arrowImage1.setOnClickListener {
                     setArrowImage(R.drawable.example_arrow_1)
@@ -100,12 +85,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 arrowImage5.setOnClickListener {
                     setArrowImage(R.drawable.example_arrow_5)
-                }
-                hintNormal.setOnClickListener {
-                    setHintAllCaps(false)
-                }
-                hintAllCaps.setOnClickListener {
-                    setHintAllCaps(true)
                 }
                 defaultStyle.setOnClickListener {
                     startActivity(Intent(this@MainActivity, MainActivity::class.java))
