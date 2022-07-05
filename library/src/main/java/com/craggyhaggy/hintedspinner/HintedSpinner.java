@@ -72,14 +72,12 @@ public class HintedSpinner extends ConstraintLayout {
         } else {
             initSpinner(context, null, defStyleAttr, Spinner.MODE_DROPDOWN);
         }
-        hintView.setOnClickListener(
-                v -> {
+        hintView.setOnClickListener(v -> {
                     setSizeOfSelectedSpinnerItem(spinnerView.getSelectedView());
                     spinnerView.performClick();
                 }
         );
-        arrowView.setOnClickListener(
-                v -> {
+        arrowView.setOnClickListener(v -> {
                     setSizeOfSelectedSpinnerItem(spinnerView.getSelectedView());
                     spinnerView.performClick();
                 }
@@ -113,19 +111,13 @@ public class HintedSpinner extends ConstraintLayout {
             final boolean withDivider = array.getBoolean(
                     R.styleable.HintedSpinner_withDivider, false
             );
-
-            //тоже надо ли указывать?
             final @DrawableRes int arrowRes = array.getResourceId(
                     R.styleable.HintedSpinner_arrowDrawable, R.drawable.ic_default_arrow
             );
             final String hint = array.getString(R.styleable.HintedSpinner_hint);
-
             final @ColorInt int dividerTint = array.getColor(
                     R.styleable.HintedSpinner_dividerTint, Color.GRAY
             );
-
-            //а нужно ли вообще менять цвет
-            //если дефолтный подстраивается под тему
             final @ColorInt int arrowTint = array.getColor(
                     R.styleable.HintedSpinner_arrowTint, Color.BLACK
             );
@@ -185,7 +177,13 @@ public class HintedSpinner extends ConstraintLayout {
 
     private void setSizeOfSelectedSpinnerItem(View view) {
         int hintHeight = hintView.getHeight();
-        spinnerView.setMinimumHeight(hintHeight);
+        view.setMinimumHeight(hintHeight);
+        view.setPadding(
+                hintView.getPaddingLeft(),
+                hintView.getPaddingTop(),
+                hintView.getPaddingRight(),
+                hintView.getPaddingBottom()
+        );
         float hintTextSize = hintView.getTextSize();
         ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_PX, hintTextSize);
     }
@@ -193,17 +191,15 @@ public class HintedSpinner extends ConstraintLayout {
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
         spinnerView = new InitialSelectedSpinner(context, attrs, defStyleAttr, mode);
         spinnerView.setVisibility(INVISIBLE);
-
-        final LayoutParams lp = new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
-        );
+        final LayoutParams lp = new LayoutParams(0, LayoutParams.WRAP_CONTENT);
+        addView(spinnerView, lp);
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
+        set.connect(spinnerView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         set.connect(spinnerView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
         set.connect(spinnerView.getId(), ConstraintSet.END, R.id.arrow, ConstraintSet.START);
         set.connect(spinnerView.getId(), ConstraintSet.BOTTOM, R.id.divider, ConstraintSet.TOP);
         set.applyTo(this);
-        addView(spinnerView, lp);
     }
 
     public void setItems(@NonNull List<String> items) {
@@ -222,7 +218,7 @@ public class HintedSpinner extends ConstraintLayout {
             @IdRes int textViewId
     ) {
         adoptHintToItem(itemLayout, textViewId);
-        final ArrayAdapter adapter = new ArrayAdapter(getContext(), itemLayout, textViewId, items) {
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), itemLayout, textViewId, items) {
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
@@ -243,7 +239,6 @@ public class HintedSpinner extends ConstraintLayout {
             if (textViewId == 0) {
                 text = (TextView) view;
             } else {
-                //  Otherwise, find the TextView field within the layout
                 text = view.findViewById(textViewId);
 
                 if (text == null) {

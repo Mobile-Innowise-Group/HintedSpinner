@@ -17,8 +17,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val items = listOf("Derek", "Kyrre", "Edrik", "Myriamm", "Alamar", "Gunnar")
-
         with(binding) {
             hintedSpinner.apply {
                 setOnSelectItemAction {
@@ -35,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     ) {
                         val progressOfSize: Float = progress.toFloat()
                         setHintSize(progressOfSize)
-                        hintSize.text = "${resources.getString(R.string.set_hint_size)} $progress"
+                        hintSize.text = getString(R.string.hint_size, progress)
                         hintSize.invalidate()
                     }
 

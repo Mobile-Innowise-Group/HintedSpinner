@@ -48,7 +48,6 @@ class InitialSelectedSpinner extends AppCompatSpinner {
 
         final int selectedItemPosition = getSelectedItemPosition();
 
-        //TODO (Исправить триггер метода setSelection дважды при выбранной позиции 0)
         if (selectedItemPosition == 0 && isSelected) {
             setSelection(selectedItemPosition);
         }

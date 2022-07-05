@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.craggyhaggy.hintedspinner.sample"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"

@@ -8,7 +8,7 @@
         <attr name="hint" format="string" />
         <attr name="hintTextAppearance" format="reference" />
         <attr name="hintTextColor" format="color" />
-        <attr name="hintTextSize" format="float" />
+        <attr name="hintTextSize" format="dimension" />
         <attr name="popupBackground" format="color" />
         <attr name="popupMode" format="enum">
             <enum name="dialog" value="0" />

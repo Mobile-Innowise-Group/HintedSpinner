@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/hintSize"
                 style="@style/TextViewStyle"
-                android:text="@string/set_hint_size_14" />
+                android:text="@string/hint_size_14" />
 
             <SeekBar
                 android:id="@+id/seekBarSize"
@@ -42,7 +42,6 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp"
                 android:max="54"
-                android:min="10"
                 android:progress="14" />
 
             <CheckBox
@@ -60,15 +59,15 @@
 
                 <TextView
                     style="@style/TextViewParallelStyle"
-                    android:text="@string/set_divider_color" />
+                    android:text="@string/divider_color" />
 
                 <TextView
                     style="@style/TextViewParallelStyle"
-                    android:text="@string/set_arrow_color" />
+                    android:text="@string/arrow_color" />
 
                 <TextView
                     style="@style/TextViewParallelStyle"
-                    android:text="@string/set_hint_color" />
+                    android:text="@string/hint_color" />
             </LinearLayout>
 
             <LinearLayout
@@ -96,7 +95,7 @@
 
             <TextView
                 style="@style/TextViewStyle"
-                android:text="@string/set_popupbackground" />
+                android:text="@string/popupbackground" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,7 +122,7 @@
 
             <TextView
                 style="@style/TextViewStyle"
-                android:text="@string/set_arrow_image" />
+                android:text="@string/arrow_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
