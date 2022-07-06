@@ -8,8 +8,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -24,11 +26,9 @@ import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
-import androidx.annotation.StyleRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.widget.ImageViewCompat;
-import androidx.core.widget.TextViewCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,17 +72,25 @@ public class HintedSpinner extends ConstraintLayout {
         } else {
             initSpinner(context, null, defStyleAttr, Spinner.MODE_DROPDOWN);
         }
-        hintView.setOnClickListener(v -> spinnerView.performClick());
-        arrowView.setOnClickListener(v -> spinnerView.performClick());
+        hintView.setOnClickListener(v -> {
+                    setSizeOfSelectedSpinnerItem(spinnerView.getSelectedView());
+                    spinnerView.performClick();
+                }
+        );
+        arrowView.setOnClickListener(v -> {
+                    setSizeOfSelectedSpinnerItem(spinnerView.getSelectedView());
+                    spinnerView.performClick();
+                }
+        );
         spinnerView.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 if (isInitialSelect) {
                     isInitialSelect = false;
                 } else {
-                    hintView.setVisibility(INVISIBLE);
+                    hintView.setVisibility(GONE);
                     spinnerView.setVisibility(VISIBLE);
-
                     if (onSelectItemAction != null) {
                         onSelectItemAction.onItemSelected((String) spinnerView.getSelectedItem());
                     }
@@ -103,25 +111,27 @@ public class HintedSpinner extends ConstraintLayout {
             final boolean withDivider = array.getBoolean(
                     R.styleable.HintedSpinner_withDivider, false
             );
-
-            //тоже надо ли указывать?
             final @DrawableRes int arrowRes = array.getResourceId(
                     R.styleable.HintedSpinner_arrowDrawable, R.drawable.ic_default_arrow
             );
             final String hint = array.getString(R.styleable.HintedSpinner_hint);
-
             final @ColorInt int dividerTint = array.getColor(
                     R.styleable.HintedSpinner_dividerTint, Color.GRAY
             );
-
-            //а нужно ли вообще менять цвет
-            //если дефолтный подстраивается под тему
             final @ColorInt int arrowTint = array.getColor(
                     R.styleable.HintedSpinner_arrowTint, Color.BLACK
             );
             final int hintTextAppearance = array.getResourceId(
                     R.styleable.HintedSpinner_hintTextAppearance, R.style.TextAppearance_AppCompat
             );
+
+            final float hintTextSize = array.getDimension(
+                    R.styleable.HintedSpinner_hintTextSize, 14
+            );
+            final int hintTextColor = array.getColor(
+                    R.styleable.HintedSpinner_hintTextColor, Color.BLACK
+            );
+
             final int popupMode = array.getInteger(
                     R.styleable.HintedSpinner_popupMode, Spinner.MODE_DROPDOWN
             );
@@ -139,10 +149,9 @@ public class HintedSpinner extends ConstraintLayout {
                 List<String> itemsList = convertCharSequenceToList(items);
                 setItems(itemsList);
             }
+            hintView.setTextColor(hintTextColor);
+            hintView.setTextSize(hintTextSize);
             hintView.setText(hint);
-            if (hintTextAppearance != -1) {
-                TextViewCompat.setTextAppearance(hintView, hintTextAppearance);
-            }
             arrowView.setImageResource(arrowRes);
             ColorStateList colorOfArrow = ColorStateList.valueOf(arrowTint);
             ImageViewCompat.setImageTintList(arrowView, colorOfArrow);
@@ -166,20 +175,31 @@ public class HintedSpinner extends ConstraintLayout {
         return list;
     }
 
+    private void setSizeOfSelectedSpinnerItem(View view) {
+        int hintHeight = hintView.getHeight();
+        view.setMinimumHeight(hintHeight);
+        view.setPadding(
+                hintView.getPaddingLeft(),
+                hintView.getPaddingTop(),
+                hintView.getPaddingRight(),
+                hintView.getPaddingBottom()
+        );
+        float hintTextSize = hintView.getTextSize();
+        ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_PX, hintTextSize);
+    }
+
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
         spinnerView = new InitialSelectedSpinner(context, attrs, defStyleAttr, mode);
         spinnerView.setVisibility(INVISIBLE);
-
-        final LayoutParams lp = new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT
-        );
+        final LayoutParams lp = new LayoutParams(0, LayoutParams.WRAP_CONTENT);
+        addView(spinnerView, lp);
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
+        set.connect(spinnerView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
         set.connect(spinnerView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
         set.connect(spinnerView.getId(), ConstraintSet.END, R.id.arrow, ConstraintSet.START);
         set.connect(spinnerView.getId(), ConstraintSet.BOTTOM, R.id.divider, ConstraintSet.TOP);
         set.applyTo(this);
-        addView(spinnerView, lp);
     }
 
     public void setItems(@NonNull List<String> items) {
@@ -198,9 +218,14 @@ public class HintedSpinner extends ConstraintLayout {
             @IdRes int textViewId
     ) {
         adoptHintToItem(itemLayout, textViewId);
-        final ArrayAdapter adapter = new ArrayAdapter<>(
-                getContext(), itemLayout, textViewId, items
-        );
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), itemLayout, textViewId, items) {
+            @Override
+            public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                setSizeOfSelectedSpinnerItem(view);
+                return view;
+            }
+        };
         adapter.setDropDownViewResource(dropDownItemLayout);
         spinnerView.setAdapter(adapter);
     }
@@ -214,7 +239,6 @@ public class HintedSpinner extends ConstraintLayout {
             if (textViewId == 0) {
                 text = (TextView) view;
             } else {
-                //  Otherwise, find the TextView field within the layout
                 text = view.findViewById(textViewId);
 
                 if (text == null) {
@@ -252,6 +276,18 @@ public class HintedSpinner extends ConstraintLayout {
         hintView.setText(hint);
     }
 
+    public void setHintSize(float size) {
+        hintView.setTextSize(size);
+        if (spinnerView.getSelectedView() != null)
+            ((TextView) spinnerView.getSelectedView()).setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
+        invalidate();
+    }
+
+    public void setHintColor(@ColorInt int hintColor) {
+        hintView.setTextColor(hintColor);
+        invalidate();
+    }
+
     public void setPopupBackground(@ColorRes int color) {
         spinnerView.setPopupBackgroundResource(color);
         invalidate();
@@ -282,11 +318,8 @@ public class HintedSpinner extends ConstraintLayout {
         invalidate();
     }
 
-    public void setHintStyle(@StyleRes int style) {
-        if (style != -1) {
-            TextViewCompat.setTextAppearance(hintView, style);
-            invalidate();
-        }
+    public void setHintAllCaps(boolean caps) {
+        hintView.setAllCaps(caps);
     }
 
     public void setOnSelectItemAction(OnSelectItemAction action) {

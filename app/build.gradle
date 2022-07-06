@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.craggyhaggy.hintedspinner.sample"
-        minSdkVersion 16
+        minSdkVersion 23
         targetSdkVersion 31
         versionCode 1
         versionName "1.0"
@@ -19,5 +19,6 @@ android {
 dependencies {
     implementation project(":library")
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation "com.github.skydoves:colorpickerview:2.2.4"
 }

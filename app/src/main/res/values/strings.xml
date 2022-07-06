@@ -1,20 +1,14 @@
 <resources>
     <string name="app_name">HintedSpinner</string>
     <string name="hint">Select a super countryasdhgtrdntrgsfedwaesdghfhdgfsdadfhgjfgfdsfghfdsfsafdgh</string>
-    <string name="divider_is_hided">Divider is hided</string>
-    <string name="divider_is_showed">Divider is showed</string>
-    <string name="show_divider">Show Divider?</string>
-    <string name="set_divider_color">Set divider color</string>
-    <string name="set_popupbackground">Set PopupBackground</string>
-    <string name="set_new_hint">Set new hint</string>
-    <string name="custom_hint_1">custom hint 1</string>
-    <string name="custom_hint_2">custom hint 2</string>
-    <string name="custom_hint_3">custom hint 3</string>
+    <string name="divider_color">Divider color</string>
+    <string name="popupbackground">PopupBackground</string>
     <string name="select_item">Select Item</string>
-    <string name="set_hint_style">Set hint Style</string>
-    <string name="set_arrow_color">Set arrow color</string>
+    <string name="arrow_color">Arrow color</string>
     <string name="clean">Clean</string>
-    <string name="style_1">24sp / colorAccent</string>
-    <string name="style_2">16sp / italic / blue</string>
-    <string name="style_3">20sp / bold / colorPrimary</string>
+    <string name="hint_size_14">Hint Size 14</string>
+    <string name="hint_size">Hint Size %d</string>
+    <string name="arrow_image">Arrow image</string>
+    <string name="hint_color">Hint Color</string>
+    <string name="divider_visibility">Divider visibility</string>
 </resources>

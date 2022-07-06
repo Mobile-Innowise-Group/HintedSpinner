@@ -8,75 +8,99 @@
         android:id="@+id/hintedSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="32dp"
         app:hint="@string/hint"
-        app:hintTextAppearance="@style/TextAppearance.MaterialComponents.Body2"
+        app:items="@array/text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:items="@array/weekday"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="36dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hintedSpinner">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginHorizontal="20dp"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/divider_text"
+                android:id="@+id/hintSize"
                 style="@style/TextViewStyle"
-                android:text="@string/show_divider" />
+                android:text="@string/hint_size_14" />
 
-            <ToggleButton
-                android:id="@+id/with_divider"
+            <SeekBar
+                android:id="@+id/seekBarSize"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:textOff="@string/divider_is_hided"
-                android:textOn="@string/divider_is_showed" />
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:max="54"
+                android:progress="14" />
 
-            <TextView
-                android:id="@+id/divider_color_text"
-                style="@style/TextViewStyle"
-                android:text="@string/set_divider_color" />
+            <CheckBox
+                android:id="@+id/withDivider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layoutDirection="rtl"
+                android:text="@string/divider_visibility" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/divider_color_red"
-                    style="@style/ButtonStyle"
-                    android:background="@color/red" />
+                <TextView
+                    style="@style/TextViewParallelStyle"
+                    android:text="@string/divider_color" />
 
-                <Button
-                    android:id="@+id/divider_color_green"
-                    style="@style/ButtonStyle"
-                    android:background="@color/green" />
+                <TextView
+                    style="@style/TextViewParallelStyle"
+                    android:text="@string/arrow_color" />
 
-                <Button
-                    android:id="@+id/divider_color_blue"
+                <TextView
+                    style="@style/TextViewParallelStyle"
+                    android:text="@string/hint_color" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <com.skydoves.colorpickerview.ColorPickerView
+                    android:id="@+id/dividerColorPicker"
                     style="@style/ButtonStyle"
-                    android:background="@color/blue" />
+                    android:layout_height="100dp" />
+
+                <com.skydoves.colorpickerview.ColorPickerView
+                    android:id="@+id/arrowColorPicker"
+                    style="@style/ButtonStyle"
+                    android:layout_height="100dp"
+                    android:layout_marginHorizontal="8dp" />
+
+                <com.skydoves.colorpickerview.ColorPickerView
+                    android:id="@+id/hintColorPicker"
+                    style="@style/ButtonStyle"
+                    android:layout_height="100dp" />
             </LinearLayout>
 
             <TextView
                 style="@style/TextViewStyle"
-                android:text="@string/set_popupbackground"
-                android:textStyle="italic" />
+                android:text="@string/popupbackground" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <Button
@@ -85,148 +109,63 @@
                     android:background="@color/red" />
 
                 <Button
-                    android:id="@+id/popup_background_green"
-                    style="@style/ButtonStyle"
-                    android:background="@color/green" />
-
-                <Button
                     android:id="@+id/popup_background_blue"
                     style="@style/ButtonStyle"
+                    android:layout_marginHorizontal="8dp"
                     android:background="@color/blue" />
+
+                <Button
+                    android:id="@+id/popup_background_green"
+                    style="@style/ButtonStyle"
+                    android:background="@color/dark_green" />
             </LinearLayout>
 
             <TextView
                 style="@style/TextViewStyle"
-                android:text="@string/set_new_hint" />
+                android:text="@string/arrow_image" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/hint1"
-                    style="@style/ButtonStyle"
-                    android:text="@string/custom_hint_1" />
-
-                <Button
-                    android:id="@+id/hint2"
-                    style="@style/ButtonStyle"
-                    android:text="@string/custom_hint_2" />
-
-                <Button
-                    android:id="@+id/hint3"
-                    style="@style/ButtonStyle"
-                    android:text="@string/custom_hint_3" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/TextViewStyle"
-                android:text="Set arrow image" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <ImageButton
                     android:id="@+id/arrow_image_1"
-                    style="@style/ButtonStyle"
+                    style="@style/ImageButtonStyle"
                     android:src="@drawable/example_arrow_1" />
 
                 <ImageButton
                     android:id="@+id/arrow_image_2"
-                    style="@style/ButtonStyle"
+                    style="@style/ImageButtonStyle"
+                    android:layout_marginHorizontal="4dp"
                     android:src="@drawable/example_arrow_2" />
 
                 <ImageButton
                     android:id="@+id/arrow_image_3"
-                    style="@style/ButtonStyle"
+                    style="@style/ImageButtonStyle"
+                    android:layout_marginHorizontal="4dp"
                     android:src="@drawable/example_arrow_3" />
-            </LinearLayout>
 
-            <TextView
-                style="@style/TextViewStyle"
-                android:text="@string/select_item" />
+                <ImageButton
+                    android:id="@+id/arrow_image_4"
+                    style="@style/ImageButtonStyle"
+                    android:layout_marginHorizontal="4dp"
+                    android:src="@drawable/example_arrow_4" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/selection_1"
-                    style="@style/ButtonStyle"
-                    android:text="select first" />
-
-                <Button
-                    android:id="@+id/selection_2"
-                    style="@style/ButtonStyle"
-                    android:text="select second" />
-
-                <Button
-                    android:id="@+id/selection_3"
-                    style="@style/ButtonStyle"
-                    android:text="select third" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/TextViewStyle"
-                android:text="@string/set_hint_style" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/hint_style_1"
-                    style="@style/ButtonStyle"
-                    android:text="@string/style_1" />
-
-                <Button
-                    android:id="@+id/hint_style_2"
-                    style="@style/ButtonStyle"
-                    android:text="@string/style_2" />
-
-                <Button
-                    android:id="@+id/hint_style_3"
-                    style="@style/ButtonStyle"
-                    android:text="@string/style_3" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/TextViewStyle"
-                android:text="@string/set_arrow_color" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/arrow_color_1"
-                    style="@style/ButtonStyle"
-                    android:background="@color/red" />
-
-                <Button
-                    android:id="@+id/arrow_color_2"
-                    style="@style/ButtonStyle"
-                    android:background="@color/green" />
-
-                <Button
-                    android:id="@+id/arrow_color_3"
-                    style="@style/ButtonStyle"
-                    android:background="@color/blue" />
+                <ImageButton
+                    android:id="@+id/arrow_image_5"
+                    style="@style/ImageButtonStyle"
+                    android:src="@drawable/example_arrow_5" />
             </LinearLayout>
 
             <Button
                 android:id="@+id/default_style"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
+                android:layout_gravity="center"
                 android:text="@string/clean" />
-
         </LinearLayout>
     </ScrollView>
 

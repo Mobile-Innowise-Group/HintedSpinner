@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="weekday">
-        <item>Monday</item>
-        <item>Tuesday</item>
-        <item>Wednesday</item>
-        <item>Thursday</item>
-        <item>Friday</item>
-        <item>Saturday</item>
-        <item>Sunday</item>
+    <string-array name="text">
+        <item>Standart Text</item>
+        <item>Meeeeeeeeeeeeeeedium Text</item>
+        <item>Very looooooooooooooooooooooooooooooooooooooooooong</item>
     </string-array>
 </resources>
