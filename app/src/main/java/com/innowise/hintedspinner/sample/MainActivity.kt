@@ -1,11 +1,11 @@
-package com.craggyhaggy.hintedspinner.sample
+package com.innowise.hintedspinner.sample
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.craggyhaggy.hintedspinner.sample.databinding.ActivityMainBinding
+import com.innowise.hintedspinner.sample.databinding.ActivityMainBinding
 import com.skydoves.colorpickerview.listeners.ColorListener
 
 class MainActivity : AppCompatActivity() {

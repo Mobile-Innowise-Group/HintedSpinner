@@ -1,4 +1,4 @@
-package com.craggyhaggy.hintedspinner;
+package com.innowise.hintedspinner;
 
 import android.content.Context;
 import android.os.Bundle;
