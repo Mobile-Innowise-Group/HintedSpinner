@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onStopTrackingTouch(seek: SeekBar) {}
                 })
                 withDivider.setOnClickListener {
-                    setWithDivider(withDivider.isChecked)
+                    showDivider(withDivider.isChecked)
                 }
 
                 dividerColorPicker.setColorListener(ColorListener { color, fromUser ->
