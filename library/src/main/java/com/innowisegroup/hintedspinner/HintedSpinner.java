@@ -1,4 +1,4 @@
-package com.innowise.hintedspinner;
+package com.innowisegroup.hintedspinner;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
