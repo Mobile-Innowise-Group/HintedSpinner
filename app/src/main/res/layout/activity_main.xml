@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.craggyhaggy.hintedspinner.HintedSpinner
+    <com.innowisegroup.hintedspinner.HintedSpinner
         android:id="@+id/hintedSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
