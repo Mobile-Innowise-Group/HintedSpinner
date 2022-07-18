@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="text">
-        <item>Standart Text</item>
+        <item>Standard Text</item>
         <item>Meeeeeeeeeeeeeeedium Text</item>
         <item>Very looooooooooooooooooooooooooooooooooooooooooong</item>
     </string-array>

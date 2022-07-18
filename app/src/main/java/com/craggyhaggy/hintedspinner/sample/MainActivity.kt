@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
                         fromUser: Boolean
                     ) {
                         val progressOfSize: Float = progress.toFloat()
-                        setHintSize(progressOfSize)
+                        setHintTextSize(progressOfSize)
                         hintSize.text = getString(R.string.hint_size, progress)
                         hintSize.invalidate()
                     }
@@ -41,10 +41,7 @@ class MainActivity : AppCompatActivity() {
                     override fun onStopTrackingTouch(seek: SeekBar) {}
                 })
                 withDivider.setOnClickListener {
-                    if (withDivider.isChecked)
-                        setWithDivider(true)
-                    else
-                        setWithDivider(false)
+                    setWithDivider(withDivider.isChecked)
                 }
 
                 dividerColorPicker.setColorListener(ColorListener { color, fromUser ->
@@ -54,11 +51,11 @@ class MainActivity : AppCompatActivity() {
 
                 arrowColorPicker.setColorListener(ColorListener { color, fromUser ->
                     if (fromUser)
-                        setArrowColor(color)
+                        setArrowTint(color)
                 })
                 hintColorPicker.setColorListener(ColorListener { color, fromUser ->
                     if (fromUser)
-                        setHintColor(color)
+                        setHintTextColor(color)
                 })
                 popupBackgroundBlue.setOnClickListener {
                     setPopupBackground(R.color.blue)
@@ -70,19 +67,19 @@ class MainActivity : AppCompatActivity() {
                     setPopupBackground(R.color.dark_green)
                 }
                 arrowImage1.setOnClickListener {
-                    setArrowImage(R.drawable.example_arrow_1)
+                    setArrowDrawable(R.drawable.example_arrow_1)
                 }
                 arrowImage2.setOnClickListener {
-                    setArrowImage(R.drawable.example_arrow_2)
+                    setArrowDrawable(R.drawable.example_arrow_2)
                 }
                 arrowImage3.setOnClickListener {
-                    setArrowImage(R.drawable.example_arrow_3)
+                    setArrowDrawable(R.drawable.example_arrow_3)
                 }
                 arrowImage4.setOnClickListener {
-                    setArrowImage(R.drawable.example_arrow_4)
+                    setArrowDrawable(R.drawable.example_arrow_4)
                 }
                 arrowImage5.setOnClickListener {
-                    setArrowImage(R.drawable.example_arrow_5)
+                    setArrowDrawable(R.drawable.example_arrow_5)
                 }
                 defaultStyle.setOnClickListener {
                     startActivity(Intent(this@MainActivity, MainActivity::class.java))

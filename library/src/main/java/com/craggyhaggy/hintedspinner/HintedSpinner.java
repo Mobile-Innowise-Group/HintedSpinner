@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -26,9 +27,11 @@ import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
+import androidx.annotation.StyleRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.core.widget.ImageViewCompat;
+import androidx.core.widget.TextViewCompat;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -115,23 +118,18 @@ public class HintedSpinner extends ConstraintLayout {
                     R.styleable.HintedSpinner_arrowDrawable, R.drawable.ic_default_arrow
             );
             final String hint = array.getString(R.styleable.HintedSpinner_hint);
-            final @ColorInt int dividerTint = array.getColor(
-                    R.styleable.HintedSpinner_dividerTint, Color.GRAY
+            final @ColorInt int dividerColor = array.getColor(
+                    R.styleable.HintedSpinner_dividerColor, Color.GRAY
             );
             final @ColorInt int arrowTint = array.getColor(
                     R.styleable.HintedSpinner_arrowTint, Color.BLACK
             );
-            final int hintTextAppearance = array.getResourceId(
-                    R.styleable.HintedSpinner_hintTextAppearance, R.style.TextAppearance_AppCompat
-            );
-
             final float hintTextSize = array.getDimension(
-                    R.styleable.HintedSpinner_hintTextSize, 14
+                    R.styleable.HintedSpinner_hintTextSize, getResources().getDimension(R.dimen.result_font)
             );
             final int hintTextColor = array.getColor(
-                    R.styleable.HintedSpinner_hintTextColor, Color.BLACK
+                    R.styleable.HintedSpinner_hintTextColor, Color.GRAY
             );
-
             final int popupMode = array.getInteger(
                     R.styleable.HintedSpinner_popupMode, Spinner.MODE_DROPDOWN
             );
@@ -139,7 +137,6 @@ public class HintedSpinner extends ConstraintLayout {
                     R.styleable.HintedSpinner_popupBackground,
                     android.R.color.darker_gray
             );
-
             final CharSequence[] items = array.getTextArray(
                     R.styleable.HintedSpinner_items
             );
@@ -149,18 +146,13 @@ public class HintedSpinner extends ConstraintLayout {
                 List<String> itemsList = convertCharSequenceToList(items);
                 setItems(itemsList);
             }
-            hintView.setTextColor(hintTextColor);
-            hintView.setTextSize(hintTextSize);
-            hintView.setText(hint);
-            arrowView.setImageResource(arrowRes);
-            ColorStateList colorOfArrow = ColorStateList.valueOf(arrowTint);
-            ImageViewCompat.setImageTintList(arrowView, colorOfArrow);
-            dividerView.setBackgroundColor(dividerTint);
-            if (withDivider) {
-                dividerView.setVisibility(VISIBLE);
-            } else {
-                dividerView.setVisibility(INVISIBLE);
-            }
+            setHint(hint);
+            setHintTextColor(hintTextColor);
+            hintView.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintTextSize);
+            setArrowDrawable(arrowRes);
+            setArrowTint(arrowTint);
+            setDividerColor(dividerColor);
+            setWithDivider(withDivider);
             setPopupBackground(popupBackground);
         } finally {
             array.recycle();
@@ -176,16 +168,18 @@ public class HintedSpinner extends ConstraintLayout {
     }
 
     private void setSizeOfSelectedSpinnerItem(View view) {
-        int hintHeight = hintView.getHeight();
-        view.setMinimumHeight(hintHeight);
-        view.setPadding(
-                hintView.getPaddingLeft(),
-                hintView.getPaddingTop(),
-                hintView.getPaddingRight(),
-                hintView.getPaddingBottom()
-        );
-        float hintTextSize = hintView.getTextSize();
-        ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_PX, hintTextSize);
+        if (view != null) {
+            int hintHeight = hintView.getHeight();
+            view.setMinimumHeight(hintHeight);
+            view.setPadding(
+                    hintView.getPaddingLeft(),
+                    hintView.getPaddingTop(),
+                    hintView.getPaddingRight(),
+                    hintView.getPaddingBottom()
+            );
+            float hintTextSize = hintView.getTextSize();
+            ((TextView) view).setTextSize(TypedValue.COMPLEX_UNIT_PX, hintTextSize);
+        }
     }
 
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
@@ -276,14 +270,14 @@ public class HintedSpinner extends ConstraintLayout {
         hintView.setText(hint);
     }
 
-    public void setHintSize(float size) {
-        hintView.setTextSize(size);
+    public void setHintTextSize(float size) {
+        hintView.setTextSize(TypedValue.COMPLEX_UNIT_SP, size);
         if (spinnerView.getSelectedView() != null)
             ((TextView) spinnerView.getSelectedView()).setTextSize(TypedValue.COMPLEX_UNIT_PX, size);
         invalidate();
     }
 
-    public void setHintColor(@ColorInt int hintColor) {
+    public void setHintTextColor(@ColorInt int hintColor) {
         hintView.setTextColor(hintColor);
         invalidate();
     }
@@ -302,7 +296,7 @@ public class HintedSpinner extends ConstraintLayout {
         invalidate();
     }
 
-    public void setArrowImage(@DrawableRes int arrow) {
+    public void setArrowDrawable(@DrawableRes int arrow) {
         arrowView.setImageResource(arrow);
         invalidate();
     }
@@ -312,14 +306,10 @@ public class HintedSpinner extends ConstraintLayout {
         invalidate();
     }
 
-    public void setArrowColor(@ColorInt int color) {
+    public void setArrowTint(@ColorInt int color) {
         ColorStateList colorStateList = ColorStateList.valueOf(color);
         ImageViewCompat.setImageTintList(arrowView, colorStateList);
         invalidate();
-    }
-
-    public void setHintAllCaps(boolean caps) {
-        hintView.setAllCaps(caps);
     }
 
     public void setOnSelectItemAction(OnSelectItemAction action) {
