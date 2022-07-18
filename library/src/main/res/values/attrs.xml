@@ -2,11 +2,10 @@
 <resources>
     <declare-styleable name="HintedSpinner">
         <attr name="withDivider" format="boolean" />
-        <attr name="dividerTint" format="color" />
+        <attr name="dividerColor" format="color" />
         <attr name="arrowDrawable" format="reference" />
         <attr name="arrowTint" format="color" />
         <attr name="hint" format="string" />
-        <attr name="hintTextAppearance" format="reference" />
         <attr name="hintTextColor" format="color" />
         <attr name="hintTextSize" format="dimension" />
         <attr name="popupBackground" format="color" />
