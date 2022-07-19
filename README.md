@@ -105,9 +105,9 @@ __Expanded spinner:__
 
 # Sample
 
-[Sample (MainActivity.kt)](https://github.com/Mobile-Innowise-Group/HintedSpinner/tree/refactor/readme/app/src/main/java/com/innowisegroup/hintedspinner/sample)
+[Sample (MainActivity.kt)](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/app/src/main/java/com/innowisegroup/hintedspinner/sample/MainActivity.kt)
 
-[Sample (activity_main.xml)](https://github.com/Mobile-Innowise-Group/HintedSpinner/tree/refactor/readme/app/src/main/res/layout)
+[Sample (activity_main.xml)](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/app/src/main/res/layout/activity_main.xml)
 
 <br/>
 
