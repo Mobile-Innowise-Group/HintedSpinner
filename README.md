@@ -1,7 +1,6 @@
 # HintedSpinner
 
-This is a library where you can set a hint in spinner without setting an item in the list as a hint. And also this library helps to customize your spinner’s view, e.g. show divider and replace the arrow with your own.
-
+A library that provides a hint to a spinner. Contains a set of attributes for customising font size, arrows, divider, item layout, item background.
 ![](./sample.gif)
 
 ## Download
