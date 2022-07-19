@@ -1,7 +1,11 @@
 # HintedSpinner
 
 A library that provides a hint to a spinner. Contains a set of attributes for customising font size, arrows, divider, item layout, item background.
+
 ![](./sample.gif)
+<br/>
+<br/>
+<br/>
 
 ## Download
 
@@ -9,6 +13,7 @@ Grab via Gradle
 ```gradle
 implementation 'com.innowisegroup.hintedspinner:hintedspinner:1.0.0'
 ```
+<br/>
 
 ## Description
 
@@ -25,6 +30,8 @@ implementation 'com.innowisegroup.hintedspinner:hintedspinner:1.0.0'
 | setArrowDrawable | set your custom arrow picture |
 | setArrowTint | set tint for your arrow |
 | setOnSelectItemAction | make something when item selected |
+
+<br/>
 
 ## Usage
 
@@ -50,13 +57,17 @@ After you get simple spinner:
     app:hint="Custom hint"
     app:items="@array/text" />
 ```
-Collapsed spinner:
+<br/>
+
+__Collapsed spinner:__
 
 ![closed](./withoutAttrsClosed.jpg)
 
-Expanded spinner:
+__Expanded spinner:__
 
 ![open](./withoutAttrsOpen.jpg)
+
+<br/>
 
 If you want, you can customize the attributes
 
@@ -78,19 +89,27 @@ If you want, you can customize the attributes
     app:items="@array/text" />
 
 ```
-Collapsed spinner:
+
+<br/>
+
+__Collapsed spinner:__
 
 ![closed](./withAttrsClosed.jpg)
 
-Expanded spinner:
+__Expanded spinner:__
 
 ![open](./withAttrsOpen.jpg)
+
+<br/>
+<br/>
 
 # Sample
 
 [Sample (MainActivity.kt)](https://github.com/Mobile-Innowise-Group/HintedSpinner/tree/refactor/readme/app/src/main/java/com/innowisegroup/hintedspinner/sample)
 
 [Sample (activity_main.xml)](https://github.com/Mobile-Innowise-Group/HintedSpinner/tree/refactor/readme/app/src/main/res/layout)
+
+<br/>
 
 # License
 
