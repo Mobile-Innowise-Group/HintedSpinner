@@ -4,19 +4,19 @@ This is a library where you can set a hint in spinner without setting an item in
 
 ## Table of Contents
 
-[Demo](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/master/README.md#SampleDemo)
+[Demo](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/README.md#SampleDemo)
 
-[Installation](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/master/README.md#Installation)
+[Installation](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/README.md#Installation)
 
-[Methods](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/master/README.md#Methods)
+[Methods](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/README.md#Methods)
 
-[How it can be used](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/master/README.md#Howitcanbeused)
+[How it can be used](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/README.md#Howitcanbeused)
 
-[Sample code](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/master/README.md#Samplecode)
+[Sample code](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/README.md#Samplecode)
 
-[Authors](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/master/README.md#Authors)
+[Authors](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/README.md#Authors)
 
-[License](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/master/README.md#License)
+[License](https://github.com/Mobile-Innowise-Group/HintedSpinner/blob/refactor/readme/README.md#License)
 
 ## OVERVIEW
 
@@ -28,7 +28,7 @@ This is a library where you can set a hint in spinner without setting an item in
 
 Grab via Gradle
 ```gradle
-implementation 'com.innowise.hintedspinner:hintedspinner:1.0.0'
+implementation 'com.innowisegroup.hintedspinner:hintedspinner:1.0.0'
 ```
 
 ## Methods
@@ -64,7 +64,7 @@ After you get simple spinner:
 
 #### **activity_main.xml：**
 ```xml
-<com.craggyhaggy.hintedspinner.HintedSpinner
+<com.innowisegroup.hintedspinner.HintedSpinner
         android:id="@+id/hintedSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -83,7 +83,7 @@ If you want, you can customize the attributes
 
 ### **activity_main.xml**
 ```xml
-<com.craggyhaggy.hintedspinner.HintedSpinner
+<com.innowisegroup.hintedspinner.HintedSpinner
 android:id="@+id/hintedSpinner"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
@@ -109,9 +109,9 @@ Open spinner:
 
 # Sample code
 
-[Sample (MainActivity.kt)](https://github.com/Mobile-Innowise-Group/HintedSpinner/tree/master/app/src/main/java/com/innowisegroup/hintedspinner/sample)
+[Sample (MainActivity.kt)](https://github.com/Mobile-Innowise-Group/HintedSpinner/tree/refactor/readme/app/src/main/java/com/innowisegroup/hintedspinner/sample)
 
-[Sample (activity_main.xml)](https://github.com/Mobile-Innowise-Group/HintedSpinner/tree/master/app/src/main/res/layout)
+[Sample (activity_main.xml)](https://github.com/Mobile-Innowise-Group/HintedSpinner/tree/refactor/readme/app/src/main/res/layout)
 
 # Authors
 
