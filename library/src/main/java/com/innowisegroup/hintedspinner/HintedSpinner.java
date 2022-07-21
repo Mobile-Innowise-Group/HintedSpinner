@@ -28,6 +28,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
+import androidx.core.view.ViewCompat;
 import androidx.core.widget.ImageViewCompat;
 
 import java.util.ArrayList;
@@ -276,16 +277,23 @@ public class HintedSpinner extends ConstraintLayout {
     }
 
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
+        final int spinnerId;
         spinnerView = new InitialSelectedSpinner(context, attrs, defStyleAttr, mode);
+        if (spinnerView.getId() == View.NO_ID) {
+            spinnerId = ViewCompat.generateViewId();
+            spinnerView.setId(spinnerId);
+        } else {
+            spinnerId = spinnerView.getId();
+        }
         spinnerView.setVisibility(INVISIBLE);
         final LayoutParams lp = new LayoutParams(0, LayoutParams.WRAP_CONTENT);
         addView(spinnerView, lp);
         ConstraintSet set = new ConstraintSet();
         set.clone(this);
-        set.connect(spinnerView.getId(), ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
-        set.connect(spinnerView.getId(), ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
-        set.connect(spinnerView.getId(), ConstraintSet.END, R.id.arrow, ConstraintSet.START);
-        set.connect(spinnerView.getId(), ConstraintSet.BOTTOM, R.id.divider, ConstraintSet.TOP);
+        set.connect(spinnerId, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP);
+        set.connect(spinnerId, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START);
+        set.connect(spinnerId, ConstraintSet.END, R.id.arrow, ConstraintSet.START);
+        set.connect(spinnerId, ConstraintSet.BOTTOM, R.id.divider, ConstraintSet.TOP);
         set.applyTo(this);
     }
 
