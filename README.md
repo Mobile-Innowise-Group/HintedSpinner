@@ -1,3 +1,4 @@
+[![](https://jitpack.io/v/Mobile-Innowise-Group/HintedSpinner.svg)](https://jitpack.io/#Mobile-Innowise-Group/HintedSpinner)
 # HintedSpinner
 
 A library that provides a hint to a spinner. Contains a set of attributes for customising font size, arrows, divider, item layout, item background.
@@ -9,9 +10,20 @@ A library that provides a hint to a spinner. Contains a set of attributes for cu
 
 ## Download
 
+
+Add below lines to root's build.gradle
+```gradle
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```    
+
 Grab via Gradle
 ```gradle
-implementation 'com.innowisegroup.hintedspinner:hintedspinner:1.0.0'
+implementation 'com.github.Mobile-Innowise-Group:HintedSpinner:{latest version}'
 ```
 <br/>
 
