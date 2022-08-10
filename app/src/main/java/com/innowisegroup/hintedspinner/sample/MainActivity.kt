@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.innowisegroup.hintedspinner.SpinnerIconItem
 import com.innowisegroup.hintedspinner.sample.databinding.ActivityMainBinding
 import com.skydoves.colorpickerview.listeners.ColorListener
 
@@ -87,5 +88,24 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.hintedSpinner.setItemsWithIcons(
+            listOf(
+                SpinnerIconItem(
+                    "Standard Text",
+                    R.drawable.example_arrow_1
+                ),
+                SpinnerIconItem(
+                    "Meeeeeeeeeeeeeeedium Text",
+                    R.drawable.example_arrow_2
+                ),
+                SpinnerIconItem(
+                    "Very looooooooooooooooooooooooooooooooooooooooooong",
+                    R.drawable.example_arrow_3
+                ),
+                SpinnerIconItem(
+                    "Hello Bob",
+                    R.drawable.example_arrow_4
+                ),
+            ))
     }
 }

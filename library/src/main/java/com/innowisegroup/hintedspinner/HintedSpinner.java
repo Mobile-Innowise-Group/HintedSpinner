@@ -25,6 +25,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -45,6 +46,7 @@ public class HintedSpinner extends ConstraintLayout {
     private View dividerView;
 
     private boolean isInitialSelect = true;
+    private boolean isItemsWithIconModeOn;
     private OnSelectItemAction onSelectItemAction;
 
     public HintedSpinner(Context context) {
@@ -62,12 +64,77 @@ public class HintedSpinner extends ConstraintLayout {
     }
 
     public void setItems(@NonNull List<String> items) {
+        isItemsWithIconModeOn = false;
         setItems(
                 items,
                 android.R.layout.simple_spinner_item,
                 R.layout.support_simple_spinner_dropdown_item,
                 android.R.id.text1
         );
+    }
+
+    public void setItemsWithIcons(@NonNull List<SpinnerIconItem> items) {
+        isItemsWithIconModeOn = true;
+        setItemsWithIcons(
+                items,
+                R.layout.layout_spinner_item_with_icon,
+                R.layout.support_simple_spinner_dropdown_item,
+                R.id.title
+        );
+        invalidate();
+    }
+
+    private void setItemsWithIcons(
+            @NonNull List<SpinnerIconItem> items,
+            @LayoutRes int itemLayout,
+            @LayoutRes int dropDownItemLayout,
+            @IdRes int textViewId
+    ) {
+        adoptHintToItem(itemLayout, textViewId);
+
+        final ArrayAdapter<SpinnerIconItem> adapter = new ArrayAdapter<SpinnerIconItem>(
+                getContext(),
+                itemLayout,
+                textViewId,
+                items
+        ) {
+            final LayoutInflater inflater = LayoutInflater.from(getContext());
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                convertView = getConvertView(inflater, getItem(position), convertView, parent, R.id.title);
+                return convertView;
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                convertView = getConvertView(inflater, getItem(position), convertView, parent, R.id.title);
+                return convertView;
+            }
+
+            @NonNull
+            private View getConvertView(
+                    LayoutInflater inflater,
+                    SpinnerIconItem item,
+                    @Nullable View convertView,
+                    @NonNull ViewGroup parent,
+                    int resourceId
+            ) {
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.layout_spinner_item_with_icon, parent, false);
+                }
+
+                TextView txtTitle = (TextView) convertView.findViewById(resourceId);
+                txtTitle.setText(item.getTitle());
+                txtTitle.setCompoundDrawablesWithIntrinsicBounds(item.getImageId(), 0, 0, 0);
+                txtTitle.setCompoundDrawablePadding(20);
+                return convertView;
+            }
+        };
+
+        adapter.setDropDownViewResource(dropDownItemLayout);
+        spinnerView.setAdapter(adapter);
     }
 
     public void setItems(
@@ -189,7 +256,11 @@ public class HintedSpinner extends ConstraintLayout {
                     hintView.setVisibility(GONE);
                     spinnerView.setVisibility(VISIBLE);
                     if (onSelectItemAction != null) {
-                        onSelectItemAction.onItemSelected((String) spinnerView.getSelectedItem());
+                        if (isItemsWithIconModeOn) {
+                            onSelectItemAction.onItemSelected((String) spinnerView.getSelectedView().toString());
+                        } else {
+                            onSelectItemAction.onItemSelected((String) spinnerView.getSelectedItem());
+                        }
                     }
                 }
             }
