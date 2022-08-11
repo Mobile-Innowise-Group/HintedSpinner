@@ -13,6 +13,18 @@
             <enum name="dialog" value="0" />
             <enum name="dropdown" value="1" />
         </attr>
+        <attr name="cellGravity" format="enum">
+            <enum name="start" value="8388611" />
+            <enum name="end" value="8388613" />
+            <enum name="left" value="3" />
+            <enum name="right" value="5" />
+            <enum name="center" value="17" />
+            <enum name="bottom" value="80" />
+            <enum name="top" value="48" />
+            <enum name="centerHorizontal" value="1" />
+            <enum name="centerVertical" value="16" />
+            <enum name="noGravity" value="0" />
+        </attr>
         <attr name="items" format="reference" />
     </declare-styleable>
 </resources>
