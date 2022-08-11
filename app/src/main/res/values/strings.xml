@@ -6,6 +6,7 @@
     <string name="select_item">Select Item</string>
     <string name="arrow_color">Arrow color</string>
     <string name="clean">Clean</string>
+    <string name="add_list_with_icons">Add list with icons</string>
     <string name="hint_size_14">Hint Size 14</string>
     <string name="hint_size">Hint Size %d</string>
     <string name="arrow_image">Arrow image</string>

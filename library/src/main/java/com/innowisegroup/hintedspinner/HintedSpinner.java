@@ -25,6 +25,7 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
@@ -47,6 +48,8 @@ public class HintedSpinner extends ConstraintLayout {
     private boolean isInitialSelect = true;
     private OnSelectItemAction onSelectItemAction;
 
+    private static final int drawablePadding = 20;
+
     public HintedSpinner(Context context) {
         this(context, null);
     }
@@ -68,6 +71,66 @@ public class HintedSpinner extends ConstraintLayout {
                 R.layout.support_simple_spinner_dropdown_item,
                 android.R.id.text1
         );
+    }
+
+    public void setItemsWithIcons(@NonNull List<SpinnerIconItem> items) {
+        setItemsWithIcons(
+                items,
+                R.layout.layout_spinner_item_with_icon,
+                R.layout.support_simple_spinner_dropdown_item,
+                R.id.title
+        );
+        invalidate();
+    }
+
+    private void setItemsWithIcons(
+            @NonNull List<SpinnerIconItem> items,
+            @LayoutRes int itemLayout,
+            @LayoutRes int dropDownItemLayout,
+            @IdRes int textViewId
+    ) {
+        adoptHintToItem(itemLayout, textViewId);
+
+        final ArrayAdapter<SpinnerIconItem> adapter = new ArrayAdapter<SpinnerIconItem>(
+                getContext(),
+                itemLayout,
+                textViewId,
+                items
+        ) {
+            final LayoutInflater inflater = LayoutInflater.from(getContext());
+
+            @NonNull
+            @Override
+            public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                return getConvertView(getItem(position), convertView, parent, R.id.title);
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                return getConvertView(getItem(position), convertView, parent, R.id.title);
+            }
+
+            @NonNull
+            private View getConvertView(
+                    SpinnerIconItem item,
+                    @Nullable View view,
+                    @NonNull ViewGroup parent,
+                    int resourceId
+            ) {
+                if (view == null) {
+                    view = inflater.inflate(R.layout.layout_spinner_item_with_icon, parent, false);
+                }
+
+                TextView txtTitle = view.findViewById(resourceId);
+                txtTitle.setText(item.getTitle());
+                txtTitle.setCompoundDrawablesWithIntrinsicBounds(item.getImageId(), 0, 0, 0);
+                txtTitle.setCompoundDrawablePadding(drawablePadding);
+                return view;
+            }
+        };
+
+        adapter.setDropDownViewResource(dropDownItemLayout);
+        spinnerView.setAdapter(adapter);
     }
 
     public void setItems(
@@ -189,7 +252,7 @@ public class HintedSpinner extends ConstraintLayout {
                     hintView.setVisibility(GONE);
                     spinnerView.setVisibility(VISIBLE);
                     if (onSelectItemAction != null) {
-                        onSelectItemAction.onItemSelected((String) spinnerView.getSelectedItem());
+                        onSelectItemAction.onItemSelected(spinnerView.getSelectedItem().toString());
                     }
                 }
             }

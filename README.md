@@ -42,6 +42,7 @@ implementation 'com.github.Mobile-Innowise-Group:HintedSpinner:{latest version}'
 | setArrowDrawable | set your custom arrow picture |
 | setArrowTint | set tint for your arrow |
 | setOnSelectItemAction | make something when item selected |
+| setItemsWithIcons | make List of String values with icons |
 
 <br/>
 
