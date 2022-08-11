@@ -1,31 +1,37 @@
 package com.innowisegroup.hintedspinner;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 
 public class SpinnerIconItem {
 
+    @DrawableRes
     private int imageId;
+
+    @NonNull
     private String title;
 
-    public SpinnerIconItem(String Title, int ImageId) {
-        this.title = Title;
-        this.imageId = ImageId;
+    public SpinnerIconItem(@NonNull String title, @DrawableRes int imageId) {
+        this.title = title;
+        this.imageId = imageId;
     }
 
+    @NonNull
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String Title) {
-        this.title = Title;
+    public void setTitle(@NonNull String title) {
+        this.title = title;
     }
 
+    @DrawableRes
     public int getImageId() {
         return imageId;
     }
 
-    public void setImageId(int ImageId) {
-        this.imageId = ImageId;
+    public void setImageId(@DrawableRes int imageId) {
+        this.imageId = imageId;
     }
 
     @NonNull

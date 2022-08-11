@@ -46,8 +46,9 @@ public class HintedSpinner extends ConstraintLayout {
     private View dividerView;
 
     private boolean isInitialSelect = true;
-    private boolean isItemsWithIconModeOn;
     private OnSelectItemAction onSelectItemAction;
+
+    private static final int drawablePadding = 20;
 
     public HintedSpinner(Context context) {
         this(context, null);
@@ -64,7 +65,6 @@ public class HintedSpinner extends ConstraintLayout {
     }
 
     public void setItems(@NonNull List<String> items) {
-        isItemsWithIconModeOn = false;
         setItems(
                 items,
                 android.R.layout.simple_spinner_item,
@@ -74,7 +74,6 @@ public class HintedSpinner extends ConstraintLayout {
     }
 
     public void setItemsWithIcons(@NonNull List<SpinnerIconItem> items) {
-        isItemsWithIconModeOn = true;
         setItemsWithIcons(
                 items,
                 R.layout.layout_spinner_item_with_icon,
@@ -103,33 +102,30 @@ public class HintedSpinner extends ConstraintLayout {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                convertView = getConvertView(inflater, getItem(position), convertView, parent, R.id.title);
-                return convertView;
+                return getConvertView(getItem(position), convertView, parent, R.id.title);
             }
 
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                convertView = getConvertView(inflater, getItem(position), convertView, parent, R.id.title);
-                return convertView;
+                return getConvertView(getItem(position), convertView, parent, R.id.title);
             }
 
             @NonNull
             private View getConvertView(
-                    LayoutInflater inflater,
                     SpinnerIconItem item,
-                    @Nullable View convertView,
+                    @Nullable View view,
                     @NonNull ViewGroup parent,
                     int resourceId
             ) {
-                if (convertView == null) {
-                    convertView = inflater.inflate(R.layout.layout_spinner_item_with_icon, parent, false);
+                if (view == null) {
+                    view = inflater.inflate(R.layout.layout_spinner_item_with_icon, parent, false);
                 }
 
-                TextView txtTitle = (TextView) convertView.findViewById(resourceId);
+                TextView txtTitle = view.findViewById(resourceId);
                 txtTitle.setText(item.getTitle());
                 txtTitle.setCompoundDrawablesWithIntrinsicBounds(item.getImageId(), 0, 0, 0);
-                txtTitle.setCompoundDrawablePadding(20);
-                return convertView;
+                txtTitle.setCompoundDrawablePadding(drawablePadding);
+                return view;
             }
         };
 
@@ -256,11 +252,7 @@ public class HintedSpinner extends ConstraintLayout {
                     hintView.setVisibility(GONE);
                     spinnerView.setVisibility(VISIBLE);
                     if (onSelectItemAction != null) {
-                        if (isItemsWithIconModeOn) {
-                            onSelectItemAction.onItemSelected((String) spinnerView.getSelectedView().toString());
-                        } else {
-                            onSelectItemAction.onItemSelected((String) spinnerView.getSelectedItem());
-                        }
+                        onSelectItemAction.onItemSelected(spinnerView.getSelectedItem().toString());
                     }
                 }
             }
