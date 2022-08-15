@@ -45,6 +45,9 @@ class MainActivity : AppCompatActivity() {
                 withDivider.setOnClickListener {
                     showDivider(withDivider.isChecked)
                 }
+                withIconAnimation.setOnClickListener {
+                    setIconAnimation(withIconAnimation.isChecked)
+                }
 
                 dividerColorPicker.setColorListener(ColorListener { color, fromUser ->
                     if (fromUser)

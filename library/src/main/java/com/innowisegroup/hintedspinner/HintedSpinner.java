@@ -48,9 +48,12 @@ public class HintedSpinner extends ConstraintLayout {
 
     private int cellGravity;
     private boolean isInitialSelect = true;
+    private boolean needIconAnimation = false;
     private OnSelectItemAction onSelectItemAction;
 
     private static final int drawablePadding = 20;
+    private static final int iconAnimationDuration = 300;
+    private static final Float iconRotation = 180f;
 
     public HintedSpinner(Context context) {
         this(context, null);
@@ -197,6 +200,10 @@ public class HintedSpinner extends ConstraintLayout {
         invalidate();
     }
 
+    public void setIconAnimation(boolean needIconAnimation) {
+        this.needIconAnimation = needIconAnimation;
+    }
+
     public void setCellGravity(int cellGravity) {
         this.cellGravity = cellGravity;
         hintView.setGravity(cellGravity);
@@ -320,12 +327,16 @@ public class HintedSpinner extends ConstraintLayout {
                     R.styleable.HintedSpinner_cellGravity,
                     Gravity.START
             );
+            final boolean iconAnimation = array.getBoolean(
+                    R.styleable.HintedSpinner_iconAnimation, false
+            );
 
             initSpinner(context, attrs, defStyleAttr, popupMode);
             if (items != null) {
                 List<String> itemsList = convertCharSequenceToList(items);
                 setItems(itemsList);
             }
+            setIconAnimation(iconAnimation);
             setHint(hint);
             setCellGravity(cellGravity);
             setHintTextColor(hintTextColor);
@@ -348,6 +359,12 @@ public class HintedSpinner extends ConstraintLayout {
         return list;
     }
 
+    private void onHintClicked() {
+        if (needIconAnimation) {
+            arrowView.animate().setDuration(iconAnimationDuration).rotationBy(iconRotation).start();
+        }
+    }
+
     private void setSizeOfSelectedSpinnerItem(View view) {
         if (view != null) {
             int hintHeight = hintView.getHeight();
@@ -365,7 +382,7 @@ public class HintedSpinner extends ConstraintLayout {
 
     private void initSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
         final int spinnerId;
-        spinnerView = new InitialSelectedSpinner(context, attrs, defStyleAttr, mode);
+        spinnerView = new InitialSelectedSpinner(context, attrs, defStyleAttr, mode, this::onHintClicked);
         if (spinnerView.getId() == View.NO_ID) {
             spinnerId = ViewCompat.generateViewId();
             spinnerView.setId(spinnerId);

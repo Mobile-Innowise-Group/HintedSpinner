@@ -44,6 +44,12 @@
                 android:max="54"
                 android:progress="14" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:orientation="horizontal">
+
             <CheckBox
                 android:id="@+id/withDivider"
                 android:layout_width="wrap_content"
@@ -51,6 +57,17 @@
                 android:layout_marginBottom="16dp"
                 android:layoutDirection="rtl"
                 android:text="@string/divider_visibility" />
+
+            <CheckBox
+                android:id="@+id/withIconAnimation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:layoutDirection="rtl"
+                android:text="@string/icon_animation" />
+
+        </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
