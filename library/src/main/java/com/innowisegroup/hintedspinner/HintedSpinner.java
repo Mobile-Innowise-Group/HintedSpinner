@@ -9,6 +9,7 @@ import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class HintedSpinner extends ConstraintLayout {
     private ImageView arrowView;
     private View dividerView;
 
+    private int cellGravity;
     private boolean isInitialSelect = true;
     private OnSelectItemAction onSelectItemAction;
 
@@ -125,6 +127,7 @@ public class HintedSpinner extends ConstraintLayout {
                 txtTitle.setText(item.getTitle());
                 txtTitle.setCompoundDrawablesWithIntrinsicBounds(item.getImageId(), 0, 0, 0);
                 txtTitle.setCompoundDrawablePadding(drawablePadding);
+                txtTitle.setGravity(cellGravity);
                 return view;
             }
         };
@@ -144,7 +147,15 @@ public class HintedSpinner extends ConstraintLayout {
             @Override
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
+                ((TextView) view).setGravity(cellGravity);
                 setSizeOfSelectedSpinnerItem(view);
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView,parent);
+                ((TextView) view).setGravity(cellGravity);
                 return view;
             }
         };
@@ -184,6 +195,14 @@ public class HintedSpinner extends ConstraintLayout {
     public void setHintTextColor(@ColorInt int hintColor) {
         hintView.setTextColor(hintColor);
         invalidate();
+    }
+
+    public void setCellGravity(int cellGravity) {
+        this.cellGravity = cellGravity;
+        hintView.setGravity(cellGravity);
+        if (spinnerView.getSelectedView() != null) {
+            ((TextView) spinnerView.getSelectedView()).setGravity(cellGravity);
+        }
     }
 
     public void setPopupBackground(@ColorRes int color) {
@@ -297,6 +316,10 @@ public class HintedSpinner extends ConstraintLayout {
             final CharSequence[] items = array.getTextArray(
                     R.styleable.HintedSpinner_items
             );
+            final int cellGravity = array.getInteger(
+                    R.styleable.HintedSpinner_cellGravity,
+                    Gravity.START
+            );
 
             initSpinner(context, attrs, defStyleAttr, popupMode);
             if (items != null) {
@@ -304,6 +327,7 @@ public class HintedSpinner extends ConstraintLayout {
                 setItems(itemsList);
             }
             setHint(hint);
+            setCellGravity(cellGravity);
             setHintTextColor(hintTextColor);
             hintView.setTextSize(TypedValue.COMPLEX_UNIT_PX, hintTextSize);
             setArrowDrawable(arrowRes);

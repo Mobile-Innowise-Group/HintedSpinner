@@ -2,6 +2,7 @@ package com.innowisegroup.hintedspinner.sample
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,32 +20,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         with(binding) {
-            addListWithIcons.setOnClickListener {
-                hintedSpinner.setItemsWithIcons(
-                    listOf(
-                        SpinnerIconItem(
-                            "Standard Text",
-                            R.drawable.example_arrow_1
-                        ),
-                        SpinnerIconItem(
-                            "Meeeeeeeeeeeeeeedium Text",
-                            R.drawable.example_arrow_2
-                        ),
-                        SpinnerIconItem(
-                            "Very looooooooooooooooooooooooooooooooooooooooooong",
-                            R.drawable.example_arrow_3
-                        ),
-                        SpinnerIconItem(
-                            "Hello Bob",
-                            R.drawable.example_arrow_4
-                        ),
-                        SpinnerIconItem(
-                            "Hello Rachit",
-                            R.drawable.example_arrow_5
-                        )
-                    )
-                )
-            }
             hintedSpinner.apply {
                 setOnSelectItemAction {
                     Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT)
@@ -108,9 +83,44 @@ class MainActivity : AppCompatActivity() {
                 arrowImage5.setOnClickListener {
                     setArrowDrawable(R.drawable.example_arrow_5)
                 }
+                startGravity.setOnClickListener {
+                    setCellGravity(Gravity.START)
+                }
+                centerGravity.setOnClickListener {
+                    setCellGravity(Gravity.CENTER)
+                }
+                endGravity.setOnClickListener {
+                    setCellGravity(Gravity.END)
+                }
                 defaultStyle.setOnClickListener {
                     startActivity(Intent(this@MainActivity, MainActivity::class.java))
                     finish()
+                }
+                addListWithIcons.setOnClickListener {
+                    hintedSpinner.setItemsWithIcons(
+                        listOf(
+                            SpinnerIconItem(
+                                "Standard Text",
+                                R.drawable.example_arrow_1
+                            ),
+                            SpinnerIconItem(
+                                "Meeeeeeeeeeeeeeedium Text",
+                                R.drawable.example_arrow_2
+                            ),
+                            SpinnerIconItem(
+                                "Very looooooooooooooooooooooooooooooooooooooooooong",
+                                R.drawable.example_arrow_3
+                            ),
+                            SpinnerIconItem(
+                                "Hello Bob",
+                                R.drawable.example_arrow_4
+                            ),
+                            SpinnerIconItem(
+                                "Hello Rachit",
+                                R.drawable.example_arrow_5
+                            )
+                        )
+                    )
                 }
             }
         }

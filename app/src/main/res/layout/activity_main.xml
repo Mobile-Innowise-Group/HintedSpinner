@@ -160,6 +160,34 @@
                     android:src="@drawable/example_arrow_5" />
             </LinearLayout>
 
+            <TextView
+                style="@style/TextViewStyle"
+                android:text="@string/spinner_gravity" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/startGravity"
+                    style="@style/ButtonStyle"
+                    android:text="@string/gravity_start" />
+
+                <Button
+                    android:id="@+id/centerGravity"
+                    style="@style/ButtonStyle"
+                    android:layout_marginHorizontal="8dp"
+                    android:text="@string/gravity_center" />
+
+                <Button
+                    android:id="@+id/endGravity"
+                    style="@style/ButtonStyle"
+                    android:text="@string/gravity_end" />
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/add_list_with_icons"
                 android:layout_width="wrap_content"
