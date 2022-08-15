@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">library</string>
+
+    <string name="drop_down_content_description">Drop down</string>
+    <string name="drop_down_list_content_description"> %1$s , drop down list</string>
+    <string name="end_of_list_content_description">, end of list</string>
     <dimen name="result_font">14sp</dimen>
 </resources>

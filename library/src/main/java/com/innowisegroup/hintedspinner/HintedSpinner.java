@@ -107,7 +107,12 @@ public class HintedSpinner extends ConstraintLayout {
 
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                return getConvertView(getItem(position), convertView, parent, R.id.title);
+                View view = getConvertView(getItem(position), convertView, parent, R.id.title);
+                view.setContentDescription(getContentDescriptionForAdapterItem(
+                        ((TextView) view).getText().toString(),
+                        items.size() - 1, position)
+                );
+                return view;
             }
 
             @NonNull
@@ -145,6 +150,16 @@ public class HintedSpinner extends ConstraintLayout {
             public View getView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getView(position, convertView, parent);
                 setSizeOfSelectedSpinnerItem(view);
+                return view;
+            }
+
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                view.setContentDescription(getContentDescriptionForAdapterItem(
+                        ((TextView) view).getText().toString(),
+                        items.size() - 1, position)
+                );
                 return view;
             }
         };
@@ -220,6 +235,18 @@ public class HintedSpinner extends ConstraintLayout {
         onSelectItemAction = action;
     }
 
+    private String getContentDescriptionForAdapterItem(
+            @NonNull String content,
+            @NonNull Integer itemsCount,
+            @NonNull Integer position
+    ) {
+        String result = "";
+        if (position.equals(itemsCount)) {
+            result = content + getContext().getString(R.string.end_of_list_content_description);
+        }
+        return result;
+    }
+
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         View.inflate(context, R.layout.layout_hinted_spinner, this);
 
@@ -261,6 +288,8 @@ public class HintedSpinner extends ConstraintLayout {
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
+        hintView.setContentDescription(context.getString(R.string.drop_down_list_content_description, hintView.getText()));
+        arrowView.setContentDescription(context.getString(R.string.drop_down_content_description));
     }
 
     private void applyAttributes(Context context, AttributeSet attrs, int defStyleAttr) {
