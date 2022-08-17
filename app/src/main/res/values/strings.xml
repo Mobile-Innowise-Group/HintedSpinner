@@ -8,6 +8,8 @@
     <string name="clean">Clean</string>
     <string name="add_list_with_icons">Add list with icons</string>
     <string name="hint_size_14">Hint Size 14</string>
+    <string name="popup_alpha">Popup Alpha %d</string>
+    <string name="popup_alpha_255">Popup Alpha 255</string>
     <string name="hint_size">Hint Size %d</string>
     <string name="arrow_image">Arrow image</string>
     <string name="spinner_gravity">Spinner Gravity</string>

@@ -9,6 +9,9 @@
         <attr name="hintTextColor" format="color" />
         <attr name="hintTextSize" format="dimension" />
         <attr name="popupBackground" format="color" />
+
+        <!-- Defines the value of the alpha for popup between 0 and 255 -->
+        <attr name="popupAlpha" format="integer" />
         <attr name="iconAnimation" format="boolean" />
         <attr name="popupMode" format="enum">
             <enum name="dialog" value="0" />

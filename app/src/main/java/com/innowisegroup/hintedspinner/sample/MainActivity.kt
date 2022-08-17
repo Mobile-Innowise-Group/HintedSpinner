@@ -42,6 +42,21 @@ class MainActivity : AppCompatActivity() {
                     override fun onStartTrackingTouch(seek: SeekBar) {}
                     override fun onStopTrackingTouch(seek: SeekBar) {}
                 })
+                seekBarAlpha.setOnSeekBarChangeListener(object :
+                    SeekBar.OnSeekBarChangeListener {
+                    override fun onProgressChanged(
+                        seek: SeekBar,
+                        progress: Int,
+                        fromUser: Boolean
+                    ) {
+                        setPopupAlpha(progress)
+                        popupAlpha.text = getString(R.string.popup_alpha, progress)
+                        popupAlpha.invalidate()
+                    }
+
+                    override fun onStartTrackingTouch(seek: SeekBar) {}
+                    override fun onStopTrackingTouch(seek: SeekBar) {}
+                })
                 withDivider.setOnClickListener {
                     showDivider(withDivider.isChecked)
                 }
