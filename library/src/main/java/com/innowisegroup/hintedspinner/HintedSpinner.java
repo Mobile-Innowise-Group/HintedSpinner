@@ -49,12 +49,11 @@ public class HintedSpinner extends ConstraintLayout {
     private int cellGravity;
     private boolean isInitialSelect = true;
     private boolean isIconAnimated = false;
-    private boolean isSpinnerExpanded = false;
     private OnSelectItemAction onSelectItemAction;
 
     private static final int drawablePadding = 20;
     private static final int iconAnimationDuration = 300;
-    private static final Float iconRotation = 180f;
+    private Float iconRotation = -180f;
 
     public HintedSpinner(Context context) {
         this(context, null);
@@ -158,7 +157,7 @@ public class HintedSpinner extends ConstraintLayout {
 
             @Override
             public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                View view = super.getDropDownView(position, convertView,parent);
+                View view = super.getDropDownView(position, convertView, parent);
                 ((TextView) view).setGravity(cellGravity);
                 return view;
             }
@@ -362,13 +361,11 @@ public class HintedSpinner extends ConstraintLayout {
 
     private void onHintClicked() {
         if (isIconAnimated) {
-            if (isSpinnerExpanded) {
-                arrowView.animate().setDuration(iconAnimationDuration).rotationBy(-iconRotation).start();
-                isSpinnerExpanded = false;
-            } else {
-                arrowView.animate().setDuration(iconAnimationDuration).rotationBy(iconRotation).start();
-                isSpinnerExpanded = true;
-            }
+            arrowView
+                    .animate()
+                    .setDuration(iconAnimationDuration)
+                    .rotationBy(iconRotation = -iconRotation)
+                    .start();
         }
     }
 
