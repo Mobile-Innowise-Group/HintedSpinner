@@ -49,6 +49,7 @@ public class HintedSpinner extends ConstraintLayout {
     private int cellGravity;
     private boolean isInitialSelect = true;
     private boolean isIconAnimated = false;
+    private boolean isSpinnerExpanded = false;
     private OnSelectItemAction onSelectItemAction;
 
     private static final int drawablePadding = 20;
@@ -361,7 +362,13 @@ public class HintedSpinner extends ConstraintLayout {
 
     private void onHintClicked() {
         if (isIconAnimated) {
-            arrowView.animate().setDuration(iconAnimationDuration).rotationBy(iconRotation).start();
+            if (isSpinnerExpanded) {
+                arrowView.animate().setDuration(iconAnimationDuration).rotationBy(-iconRotation).start();
+                isSpinnerExpanded = false;
+            } else {
+                arrowView.animate().setDuration(iconAnimationDuration).rotationBy(iconRotation).start();
+                isSpinnerExpanded = true;
+            }
         }
     }
 
