@@ -48,7 +48,7 @@ public class HintedSpinner extends ConstraintLayout {
 
     private int cellGravity;
     private boolean isInitialSelect = true;
-    private boolean needIconAnimation = false;
+    private boolean isIconAnimated = false;
     private OnSelectItemAction onSelectItemAction;
 
     private static final int drawablePadding = 20;
@@ -200,8 +200,8 @@ public class HintedSpinner extends ConstraintLayout {
         invalidate();
     }
 
-    public void setIconAnimation(boolean needIconAnimation) {
-        this.needIconAnimation = needIconAnimation;
+    public void setIconAnimation(boolean isIconAnimated) {
+        this.isIconAnimated = isIconAnimated;
     }
 
     public void setCellGravity(int cellGravity) {
@@ -360,7 +360,7 @@ public class HintedSpinner extends ConstraintLayout {
     }
 
     private void onHintClicked() {
-        if (needIconAnimation) {
+        if (isIconAnimated) {
             arrowView.animate().setDuration(iconAnimationDuration).rotationBy(iconRotation).start();
         }
     }
