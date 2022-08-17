@@ -50,11 +50,11 @@ public class HintedSpinner extends ConstraintLayout {
     private int cellGravity;
     private boolean isInitialSelect = true;
     private boolean isIconAnimated = false;
-    private int popupAlpha = 255;
     private OnSelectItemAction onSelectItemAction;
 
     private static final int drawablePadding = 20;
     private static final int iconAnimationDuration = 300;
+    private static final int popupDefaultAlpha = 255;
     private Float iconRotation = -180f;
 
     public HintedSpinner(Context context) {
@@ -337,7 +337,7 @@ public class HintedSpinner extends ConstraintLayout {
                     R.styleable.HintedSpinner_iconAnimation, false
             );
             final int alpha = array.getInteger(
-                    R.styleable.HintedSpinner_popupAlpha, popupAlpha
+                    R.styleable.HintedSpinner_popupAlpha, popupDefaultAlpha
             );
 
             initSpinner(context, attrs, defStyleAttr, popupMode);
