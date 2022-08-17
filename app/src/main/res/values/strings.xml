@@ -13,6 +13,7 @@
     <string name="spinner_gravity">Spinner Gravity</string>
     <string name="hint_color">Hint Color</string>
     <string name="divider_visibility">Divider visibility</string>
+    <string name="icon_animation">Icon animation</string>
     <string name="gravity_start">Start</string>
     <string name="gravity_center">Center</string>
     <string name="gravity_end">End</string>

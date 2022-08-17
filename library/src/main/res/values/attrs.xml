@@ -9,6 +9,7 @@
         <attr name="hintTextColor" format="color" />
         <attr name="hintTextSize" format="dimension" />
         <attr name="popupBackground" format="color" />
+        <attr name="iconAnimation" format="boolean" />
         <attr name="popupMode" format="enum">
             <enum name="dialog" value="0" />
             <enum name="dropdown" value="1" />

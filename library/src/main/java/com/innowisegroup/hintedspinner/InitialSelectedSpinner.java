@@ -8,11 +8,17 @@ import android.util.AttributeSet;
 import androidx.appcompat.widget.AppCompatSpinner;
 
 class InitialSelectedSpinner extends AppCompatSpinner {
+    public interface OnHintClickListener {
+        void onHintClicked();
+    }
 
     private static final String KEY_IS_INITIAL_SELECT = "KEY_IS_INITIAL_SELECT";
     private static final String KEY_SUPER_STATE = "KEY_SUPER_STATE";
 
     private boolean isSelected = false;
+    private boolean isClicked = false;
+
+    private OnHintClickListener onHintClickListener;
 
     public InitialSelectedSpinner(Context context) {
         super(context);
@@ -28,6 +34,31 @@ class InitialSelectedSpinner extends AppCompatSpinner {
 
     public InitialSelectedSpinner(Context context, AttributeSet attrs, int defStyleAttr, int mode) {
         super(context, attrs, defStyleAttr, mode);
+    }
+
+    public InitialSelectedSpinner(
+            Context context,
+            AttributeSet attrs,
+            int defStyleAttr,
+            int mode,
+            OnHintClickListener onHintClickListener
+    ) {
+        super(context, attrs, defStyleAttr, mode);
+        this.onHintClickListener = onHintClickListener;
+    }
+
+    @Override
+    public boolean performClick() {
+        isClicked = true;
+        return super.performClick();
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasWindowFocus) {
+        super.onWindowFocusChanged(hasWindowFocus);
+        if (isClicked) {
+            onHintClickListener.onHintClicked();
+        }
     }
 
     @Override
