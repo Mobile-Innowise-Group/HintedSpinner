@@ -44,6 +44,20 @@
                 android:max="54"
                 android:progress="14" />
 
+            <TextView
+                android:id="@+id/popupAlpha"
+                style="@style/TextViewStyle"
+                android:text="@string/popup_alpha_255" />
+
+            <SeekBar
+                android:id="@+id/seekBarAlpha"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:max="255"
+                android:progress="255" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

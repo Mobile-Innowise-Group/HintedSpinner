@@ -24,6 +24,7 @@ import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.IdRes;
+import androidx.annotation.IntRange;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,6 +54,7 @@ public class HintedSpinner extends ConstraintLayout {
 
     private static final int drawablePadding = 20;
     private static final int iconAnimationDuration = 300;
+    private static final int popupDefaultAlpha = 255;
     private Float iconRotation = -180f;
 
     public HintedSpinner(Context context) {
@@ -217,6 +219,10 @@ public class HintedSpinner extends ConstraintLayout {
         invalidate();
     }
 
+    public void setPopupAlpha(@IntRange(from = 0, to = 255) int alpha) {
+        spinnerView.getPopupBackground().setAlpha(alpha);
+    }
+
     public void showDivider(boolean isDividerEnabled) {
         if (isDividerEnabled) {
             dividerView.setVisibility(VISIBLE);
@@ -330,6 +336,9 @@ public class HintedSpinner extends ConstraintLayout {
             final boolean iconAnimation = array.getBoolean(
                     R.styleable.HintedSpinner_iconAnimation, false
             );
+            final int alpha = array.getInteger(
+                    R.styleable.HintedSpinner_popupAlpha, popupDefaultAlpha
+            );
 
             initSpinner(context, attrs, defStyleAttr, popupMode);
             if (items != null) {
@@ -346,6 +355,7 @@ public class HintedSpinner extends ConstraintLayout {
             setDividerColor(dividerColor);
             showDivider(isDividerEnabled);
             setPopupBackground(popupBackground);
+            setPopupAlpha(alpha);
         } finally {
             array.recycle();
         }
