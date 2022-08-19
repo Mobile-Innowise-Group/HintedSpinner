@@ -79,12 +79,15 @@ class MainActivity : AppCompatActivity() {
                 })
                 popupBackgroundBlue.setOnClickListener {
                     setPopupBackground(R.color.blue)
+                    setPopupAlpha(seekBarAlpha.progress)
                 }
                 popupBackgroundRed.setOnClickListener {
                     setPopupBackground(R.color.red)
+                    setPopupAlpha(seekBarAlpha.progress)
                 }
                 popupBackgroundGreen.setOnClickListener {
                     setPopupBackground(R.color.dark_green)
+                    setPopupAlpha(seekBarAlpha.progress)
                 }
                 arrowImage1.setOnClickListener {
                     setArrowDrawable(R.drawable.example_arrow_1)

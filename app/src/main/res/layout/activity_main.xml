@@ -137,18 +137,18 @@
                 <Button
                     android:id="@+id/popup_background_red"
                     style="@style/ButtonStyle"
-                    android:background="@color/red" />
+                    android:backgroundTint="@color/red" />
 
                 <Button
                     android:id="@+id/popup_background_blue"
                     style="@style/ButtonStyle"
                     android:layout_marginHorizontal="8dp"
-                    android:background="@color/blue" />
+                    android:backgroundTint="@color/blue" />
 
                 <Button
                     android:id="@+id/popup_background_green"
                     style="@style/ButtonStyle"
-                    android:background="@color/dark_green" />
+                    android:backgroundTint="@color/dark_green" />
             </LinearLayout>
 
             <TextView
