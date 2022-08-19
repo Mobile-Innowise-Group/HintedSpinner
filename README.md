@@ -1,7 +1,7 @@
 [![](https://jitpack.io/v/Mobile-Innowise-Group/HintedSpinner.svg)](https://jitpack.io/#Mobile-Innowise-Group/HintedSpinner)
 # HintedSpinner
 
-A library that provides a hint to a spinner. Contains a set of attributes for customising font size, arrows, divider, item layout, item background.
+A library that provides a hint to a spinner. Contains a set of attributes for customising font size, arrows, divider, item layout, item background, cell gravity, popup alpha and icon animation.
 
 ![](./sample.gif)
 <br/>
@@ -43,6 +43,9 @@ implementation 'com.github.Mobile-Innowise-Group:HintedSpinner:{latest version}'
 | setArrowTint | set tint for your arrow |
 | setOnSelectItemAction | make something when item selected |
 | setItemsWithIcons | make List of String values with icons |
+| setCellGravity | set element gravity in the cell |
+| setIconAnimation | show right icon animation for collapsed/expanded state |
+| setPopupAlpha | set alpha for popup background |
 
 <br/>
 
@@ -112,6 +115,64 @@ __Collapsed spinner:__
 __Expanded spinner:__
 
 ![open](./withAttrsOpen.jpg)
+
+<br/>
+
+Also you can set the items with icons
+
+### **MainActivity.kt**
+```kotlin
+hintedSpinner.setItemsWithIcons(
+                        listOf(
+                            SpinnerIconItem(
+                                "Standard Text",
+                                R.drawable.example_arrow_1
+                            ),
+                            SpinnerIconItem(
+                                "Meeeeeeeeeeeeeeedium Text",
+                                R.drawable.example_arrow_2
+                            ),
+                            SpinnerIconItem(
+                                "Very looooooooooooooooooooooooooooooooooooooooooong",
+                                R.drawable.example_arrow_3
+                            ),
+                            SpinnerIconItem(
+                                "Hello Bob",
+                                R.drawable.example_arrow_4
+                            ),
+                            SpinnerIconItem(
+                                "Hello Rachit",
+                                R.drawable.example_arrow_5
+                            )
+                        )
+                    )
+
+```
+
+### **activity_main.xml**
+```xml
+<com.innowisegroup.hintedspinner.HintedSpinner
+    android:id="@+id/hintedSpinner"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    app:hintTextSize="14sp"
+    app:popupAlpha="228"
+    app:iconAnimation="true"
+    app:arrowDrawable="@drawable/example_arrow_4"
+    app:popupBackground="@color/colorPrimaryDark" />
+
+```
+
+<br/>
+
+__Collapsed spinner:__
+
+![closed](./collapsedWithCustomAttrs.jpg)
+
+__Expanded spinner:__
+
+![open](./expandedWithCustomAttrs.jpg)
 
 <br/>
 <br/>
