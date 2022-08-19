@@ -111,7 +111,9 @@ public class HintedSpinner extends ConstraintLayout {
             @NonNull
             @Override
             public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-                return getConvertView(getItem(position), convertView, parent, R.id.title);
+                View view = getConvertView(getItem(position), convertView, parent, R.id.title);
+                setSizeOfSelectedSpinnerItem(view);
+                return view;
             }
 
             @Override
