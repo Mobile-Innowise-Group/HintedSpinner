@@ -44,7 +44,7 @@ implementation 'com.github.Mobile-Innowise-Group:HintedSpinner:{latest version}'
 | setOnSelectItemAction | make something when item selected |
 | setItemsWithIcons | make List of String values with icons |
 | setCellGravity | set element gravity in the cell |
-| setIconAnimation | show right icon animation for collapsed/expanded state |
+| setIconAnimation | show arrow animation for collapsed/expanded state |
 | setPopupAlpha | set alpha for popup background |
 
 <br/>
