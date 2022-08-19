@@ -1,5 +1,6 @@
 package com.innowisegroup.hintedspinner;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -50,12 +51,13 @@ public class HintedSpinner extends ConstraintLayout {
     private int cellGravity;
     private boolean isInitialSelect = true;
     private boolean isIconAnimated = false;
+    private float toDegree = 180f;
+    private float fromDegree = 0f;
     private OnSelectItemAction onSelectItemAction;
 
     private static final int drawablePadding = 20;
     private static final int iconAnimationDuration = 300;
     private static final int popupDefaultAlpha = 255;
-    private Float iconRotation = -180f;
 
     public HintedSpinner(Context context) {
         this(context, null);
@@ -371,10 +373,10 @@ public class HintedSpinner extends ConstraintLayout {
 
     private void onHintClicked() {
         if (isIconAnimated) {
-            arrowView
-                    .animate()
+            fromDegree += toDegree;
+            ObjectAnimator
+                    .ofFloat(arrowView, ROTATION, toDegree = fromDegree - toDegree, fromDegree -= toDegree)
                     .setDuration(iconAnimationDuration)
-                    .rotationBy(iconRotation = -iconRotation)
                     .start();
         }
     }
